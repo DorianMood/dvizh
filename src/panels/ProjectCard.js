@@ -1,21 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { platform, IOS, Card } from '@vkontakte/vkui';
+import { platform, IOS, Card, Cell, Button, Avatar } from '@vkontakte/vkui';
+import Icon24User from '@vkontakte/icons/dist/24/user';
+import Icon16Place from '@vkontakte/icons/dist/16/place';
+import Icon24MoneyCircle from '@vkontakte/icons/dist/24/money_circle';
 
 
 const osName = platform();
 
-const ProjectCard = props => (
-    <Card size="l">
-        <div>{props.project.id}</div>
-        <div>{props.project.name}</div>
-        <div>{props.project.description}</div>
-        <div>{props.project.price}</div>
-        <div>{props.project.location.name}</div>
-        <div>{props.project.location.lat}</div>
-        <div>{props.project.location.lng}</div>
-    </Card>
-);
+const ProjectCard = props => {
+
+    const { project } = props;
+
+    return (
+        <Card size="l">
+            <Cell
+                before={<Avatar size={32}><Icon24User /></Avatar>}
+                size="l"
+                description={<div style={{ display: 'flex' }}><Icon16Place />{project.location.name}</div>}
+    asideContent={<div><Icon24MoneyCircle />{Math.round(project.price)}</div>}
+                bottomContent={
+                    <>
+                        <div>{project.description}</div>
+                        <div style={{ display: 'flex' }}>
+                            <Button size="m">Добавить</Button>
+                            <Button size="m" mode="secondary" style={{ marginLeft: 8 }}>Скрыть</Button>
+                        </div>
+                    </>
+                }
+            >{project.name}</Cell>
+        </Card>
+    );
+}
 
 ProjectCard.propTypes = {
     project: PropTypes.any.isRequired

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { platform, IOS, Panel, Header, Group, CardGrid } from '@vkontakte/vkui';
+import { platform, IOS, Panel, Header, Group, CardGrid, CellButton } from '@vkontakte/vkui';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+
+import Icon24Sort from '@vkontakte/icons/dist/24/sort';
 
 import ProjectCard from './ProjectCard';
 
@@ -33,21 +35,21 @@ const ProjectCardList = props => {
 
     if (loading) return (<p>loading...</p>);
     if (error) return `Error! ${error.message}`;
-    
+
     api.getUserInfo().then(userInfo => {
         console.log(userInfo.id);
-      }).catch(e => {
-          console.log(e)
-      });
+    }).catch(e => {
+        console.log(e)
+    });
 
     return (
         <Panel id={props.id}>
-            <Group separator="hide" header={<Header mode="secondary">Projects</Header>}>
+            <Group separator="hide" header={<CellButton before={<Icon24Sort />}>Фильтровать</CellButton>}>
                 <CardGrid>
                     {
                         data.projects.map((project, index) => (
-                                <ProjectCard key={index} project={project}/>
-                            ))
+                            <ProjectCard key={index} project={project} />
+                        ))
                     }
                 </CardGrid>
             </Group>
