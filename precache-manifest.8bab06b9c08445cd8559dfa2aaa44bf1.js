@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a3f50d4cd96acd80aa095dc3dbde11fe",
+    "revision": "8293bb5977fd988e34846a57901c3f6a",
     "url": "/dvizh/index.html"
   },
   {
-    "revision": "0ca0858f926ae35c2f29",
+    "revision": "181a89652bc2f3cf1513",
     "url": "/dvizh/static/css/2.86df01db.chunk.css"
   },
   {
-    "revision": "59cc5371482adddbd49d",
+    "revision": "52d306806ecdf93a9c4b",
     "url": "/dvizh/static/css/main.981f7211.chunk.css"
   },
   {
-    "revision": "0ca0858f926ae35c2f29",
-    "url": "/dvizh/static/js/2.9984ce3a.chunk.js"
+    "revision": "181a89652bc2f3cf1513",
+    "url": "/dvizh/static/js/2.36ccddd1.chunk.js"
   },
   {
-    "revision": "21ced859ea2b2d6b856d461ad6c2afed",
-    "url": "/dvizh/static/js/2.9984ce3a.chunk.js.LICENSE.txt"
+    "revision": "d5861d7b76a8fd95b409266b63e4abbe",
+    "url": "/dvizh/static/js/2.36ccddd1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "59cc5371482adddbd49d",
-    "url": "/dvizh/static/js/main.4ac95d2d.chunk.js"
+    "revision": "52d306806ecdf93a9c4b",
+    "url": "/dvizh/static/js/main.e9fe511c.chunk.js"
   },
   {
     "revision": "900e7a008fa00b0e50c5",
