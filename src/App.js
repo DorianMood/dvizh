@@ -17,7 +17,7 @@ import ProjectCardList from './panels/ProjectCardList';
 import { Tabbar, TabbarItem, Epic } from '@vkontakte/vkui';
 
 const client = new ApolloClient({
-	uri: 'https://git.heroku.com/dvizh-api.git',
+	uri: 'https://dvizh-api.herokuapp.com/',
 	fetchOptions: {
 		mode: 'no-cors',
 	},
