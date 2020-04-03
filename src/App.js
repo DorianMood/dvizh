@@ -17,7 +17,10 @@ import ProjectCardList from './panels/ProjectCardList';
 import { Tabbar, TabbarItem, Epic } from '@vkontakte/vkui';
 
 const client = new ApolloClient({
-	uri: "http://localhost:4001/"
+	uri: 'https://git.heroku.com/intense-caverns-68201.git',
+	fetchOptions: {
+		mode: 'no-cors',
+	},
 })
 
 const api = new VKMiniAppAPI();
