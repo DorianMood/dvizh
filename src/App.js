@@ -5,24 +5,17 @@ import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenS
 import '@vkontakte/vkui/dist/vkui.css';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 
 import Icon28BombOutline from '@vkontakte/icons/dist/28/bomb_outline';
 import Icon28PlaceOutline from '@vkontakte/icons/dist/28/place_outline';
 import Icon28GhostOutline from '@vkontakte/icons/dist/28/ghost_outline';
 
-import Home from './panels/Home';
-import Persik from './panels/Persik';
 import ProjectCardList from './panels/ProjectCardList';
 import { Tabbar, TabbarItem, Epic } from '@vkontakte/vkui';
 
 const client = new ApolloClient({
 	uri: 'https://dvizh-api.herokuapp.com/'
 })
-
-const api = new VKMiniAppAPI();
-api.initApp();
-window.vkMiniAppAPI = api;
 
 const App = () => {
 	const [activeStory, setActiveStory] = useState('projects-my');
@@ -101,4 +94,3 @@ const App = () => {
 }
 
 export default App;
-

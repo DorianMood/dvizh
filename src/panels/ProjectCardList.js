@@ -14,7 +14,7 @@ const osName = platform();
 
 const GET_PROJECTS = gql`
     {
-        projects(id: "123") {
+        Events(id: "123") {
             id
             name
             description
@@ -47,7 +47,7 @@ const ProjectCardList = props => {
             <Group separator="hide" header={<CellButton before={<Icon24Sort />}>Фильтровать</CellButton>}>
                 <CardGrid>
                     {
-                        data.projects.map((project, index) => (
+                        data.Events.map((project, index) => (
                             <ProjectCard key={index} project={project} />
                         ))
                     }
