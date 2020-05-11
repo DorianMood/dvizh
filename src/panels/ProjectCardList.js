@@ -1,54 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Panel, Group, CardGrid, CellButton } from "@vkontakte/vkui";
-import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import {
+  Group,
+  CardGrid,
+  CellButton,
+  View,
+  ModalRoot,
+  ModalPage,
+  Cell,
+  Switch,
+  ModalPageHeader,
+  Title,
+} from "@vkontakte/vkui";
 
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
 import ProjectCard from "./ProjectCard";
 
-const GET_PROJECTS = gql`
-  {
-    Events(id: "123") {
-      id
-      name
-      description
-      price
-      location {
-        lat
-        lng
-        name
-      }
-    }
-  }
-`;
+const MAIN_MODAL = "main-modal";
 
 const ProjectCardList = (props) => {
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { events } = props;
 
-  if (loading) return <p>loading...</p>;
-  if (error) return `Error! ${error.message}`;
+  const [currentModal, setCurrentModal] = useState(null);
+
+  const filter = (
+    <ModalRoot
+      activeModal={currentModal}
+      onClose={() => {
+        setCurrentModal(null);
+      }}
+    >
+      <ModalPage
+        id={MAIN_MODAL}
+        header={<ModalPageHeader><Title level="2">Фильтры</Title></ModalPageHeader>}
+        dynamicContentHeight
+      >
+        <Cell asideContent={<Switch />}>Рядом</Cell>
+        <Cell asideContent={<Switch />}>Скоро</Cell>
+        <Cell asideContent={<Switch />}>Комментарии к записям</Cell>
+        <Cell></Cell><Cell></Cell>
+      </ModalPage>
+    </ModalRoot>
+  );
 
   return (
-    <Panel id={props.id}>
+    <View modal={filter}>
       <Group
         separator="hide"
-        header={<CellButton before={<Icon24Sort />}>Фильтровать</CellButton>}
+        header={
+          <CellButton
+            before={<Icon24Sort />}
+            onClick={() => {
+              setCurrentModal(MAIN_MODAL);
+            }}
+          >
+            Фильтровать
+          </CellButton>
+        }
       >
         <CardGrid>
-          {data.Events.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+          {events.map((project, key) => (
+            <ProjectCard key={key} project={project} />
           ))}
         </CardGrid>
       </Group>
-    </Panel>
+    </View>
   );
 };
 
 ProjectCardList.propTypes = {
-  id: PropTypes.string.isRequired,
-  go: PropTypes.func.isRequired,
+  events: PropTypes.array.isRequired,
 };
 
 export default ProjectCardList;

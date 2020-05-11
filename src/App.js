@@ -16,7 +16,7 @@ const App = () => {
       <Meta />
 
       <ApolloProvider client={client}>
-		  <TabsRoot />
+        <TabsRoot />
       </ApolloProvider>
     </>
   );
