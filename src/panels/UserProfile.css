@@ -1,3 +1,14 @@
 .user-profile-header {
-    margin-top: 10px;
+    margin-top: 32px;
+}
+
+.user-profile-satisfied {
+    display: flex;
+    padding: 0px;
+}
+
+.user-profile-satisfied-col {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
 }

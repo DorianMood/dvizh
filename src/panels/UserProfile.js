@@ -6,8 +6,11 @@ import {
   CardGrid,
   CellButton,
   Avatar,
-  Card,
-  RichCell
+  RichCell,
+  Progress,
+  Div,
+  InfoRow,
+  Title
 } from "@vkontakte/vkui";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -15,6 +18,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
+import Rating from "./Rating";
 import ProjectCard from "./ProjectCard";
 import "./UserProfile.css";
 
@@ -42,20 +46,27 @@ const UserProfile = (props) => {
 
   return (
     <Panel id={props.id}>
-      <CardGrid separator="show" className="user-profile-header">
-        <Card size="l">
-          <RichCell
-            disabled
-            multiline
-            before={<Avatar size={72}><Icon24User /></Avatar>}
-            text="Держи за обед в EZO"
-            caption="Вчера в 20:30"
-            after="+ 1 500 ₽"
-          >
-            Никита Долгошеин
-          </RichCell>
-        </Card>
-      </CardGrid>
+      <RichCell
+        className="user-profile-header"
+        disabled
+        multiline
+        before={
+          <Avatar size={72}>
+            <Icon24User />
+          </Avatar>
+        }
+        text={
+          <Div className="user-profile-satisfied">
+            <Div className="user-profile-satisfied-col">😊<Title level="3">1234</Title></Div>
+            <Div className="user-profile-satisfied-col">😴<Title level="3">1337</Title></Div>
+            <Div className="user-profile-satisfied-col">😍<Title level="3">22</Title></Div>
+            <Div className="user-profile-satisfied-col">🤬<Title level="3">11</Title></Div>
+          </Div>
+        }
+        caption="Вчера в 20:30"
+      >
+        <b>Никита Долгошеин</b>
+      </RichCell>
 
       <Group
         separator="hide"
