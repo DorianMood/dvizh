@@ -12,6 +12,7 @@ import Icon28GhostOutline from '@vkontakte/icons/dist/28/ghost_outline';
 
 import ProjectCardList from './panels/ProjectCardList';
 import { Tabbar, TabbarItem, Epic } from '@vkontakte/vkui';
+import UserProfile from './panels/UserProfile';
 
 const client = new ApolloClient({
 	uri: 'https://dvizh-api.herokuapp.com/'
@@ -77,8 +78,8 @@ const App = () => {
 
 					</Tabbar>
 				} >
-					<View id="projects-my" activePanel="projects">
-						<ProjectCardList id="projects" go={go} />
+					<View id="projects-my" activePanel="profile">
+						<UserProfile id="profile" />
 					</View>
 					<View id="projects-near" activePanel="projects">
 						<ProjectCardList id="projects" go={go} />
