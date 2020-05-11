@@ -10,7 +10,7 @@ import {
   Progress,
   Div,
   InfoRow,
-  Title
+  Title,
 } from "@vkontakte/vkui";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -40,6 +40,12 @@ const GET_PROJECTS = gql`
 
 const UserProfile = (props) => {
   const { loading, error, data } = useQuery(GET_PROJECTS);
+  const rating = [
+    { key: "😊", value: 101 },
+    { key: "😴", value: 11 },
+    { key: "😍", value: 35 },
+    { key: "🤬", value: 4 },
+  ];
 
   if (loading) return <p>loading...</p>;
   if (error) return `Error! ${error.message}`;
@@ -57,15 +63,18 @@ const UserProfile = (props) => {
         }
         text={
           <Div className="user-profile-satisfied">
-            <Div className="user-profile-satisfied-col">😊<Title level="3">1234</Title></Div>
-            <Div className="user-profile-satisfied-col">😴<Title level="3">1337</Title></Div>
-            <Div className="user-profile-satisfied-col">😍<Title level="3">22</Title></Div>
-            <Div className="user-profile-satisfied-col">🤬<Title level="3">11</Title></Div>
+            {rating.map((item) => (
+              <Div className="user-profile-satisfied-col">
+                <Title level="2">{item.key}</Title>
+                <Title level="3">{item.value}</Title>
+              </Div>
+            ))}
           </Div>
         }
-        caption="Вчера в 20:30"
       >
-        <b>Никита Долгошеин</b>
+        <Title level="2" weight="regular" style={{ textAlign: "center" }}>
+          Никита Долгошеин
+        </Title>
       </RichCell>
 
       <Group
