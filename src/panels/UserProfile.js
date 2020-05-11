@@ -77,8 +77,11 @@ const UserProfile = (props) => {
         disabled
         multiline
         before={
-          <Avatar size={72} src={fetchedUser ? fetchedUser.photo_200 : null}>
-            <Icon24User />
+          <Avatar
+            size={72}
+            src={fetchedUser !== null ? fetchedUser.photo_200 : null}
+          >
+            {fetchedUser === null ? <Icon24User /> : null}
           </Avatar>
         }
         text={
@@ -92,8 +95,8 @@ const UserProfile = (props) => {
           </Div>
         }
       >
-        <Title level="2" weight="regular" style={{ textAlign: "center" }}>
-          {fetchedUser
+        <Title level="2" weight="regular">
+          {fetchedUser !== null
             ? `${fetchedUser.first_name} ${fetchedUser.last_name}`
             : userName}
         </Title>
