@@ -11,7 +11,7 @@
     "deploy": "gh-pages -d build"
   },
   "keywords": [],
-  "author": "",
+  "author": "dorianmood",
   "license": "MIT",
   "devDependencies": {
     "cross-env": "^5.2.0",
