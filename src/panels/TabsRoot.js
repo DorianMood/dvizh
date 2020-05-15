@@ -7,7 +7,7 @@ import Icon28BombOutline from "@vkontakte/icons/dist/28/bomb_outline";
 import Icon28PlaceOutline from "@vkontakte/icons/dist/28/place_outline";
 import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 
-import ProjectCardList from "./ProjectCardList";
+import EventCardList from "./EventCardList";
 import UserProfile from "./UserProfile";
 
 const TabsRoot = () => {
@@ -53,10 +53,10 @@ const TabsRoot = () => {
         <UserProfile />
       </View>
       <View id="projects-near">
-        <ProjectCardList events={[]} />
+        <EventCardList events={[]} />
       </View>
       <View id="projects-friends">
-        <ProjectCardList events={[]} />
+        <EventCardList events={[]} />
       </View>
     </Epic>
   );

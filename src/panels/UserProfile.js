@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 
 import "./UserProfile.css";
-import ProjectCardList from "./ProjectCardList";
+import ProjectCardList from "./EventCardList";
 
 const GET_PROJECTS = gql`
   {

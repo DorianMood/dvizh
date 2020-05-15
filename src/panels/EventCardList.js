@@ -15,7 +15,7 @@ import {
 
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "./EventCard";
 
 const MAIN_MODAL = "main-modal";
 
@@ -24,7 +24,9 @@ const ProjectCardList = (props) => {
 
   const [currentModal, setCurrentModal] = useState(null);
 
-  const filter = (
+  
+
+  const filterModal = (
     <ModalRoot
       activeModal={currentModal}
       onClose={() => {
@@ -45,7 +47,7 @@ const ProjectCardList = (props) => {
   );
 
   return (
-    <View modal={filter}>
+    <View modal={filterModal}>
       <Group
         separator="hide"
         header={
