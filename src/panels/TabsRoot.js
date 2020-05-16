@@ -7,56 +7,66 @@ import Icon28BombOutline from "@vkontakte/icons/dist/28/bomb_outline";
 import Icon28PlaceOutline from "@vkontakte/icons/dist/28/place_outline";
 import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 
-import EventCardList from "./EventCardList";
 import UserProfile from "./UserProfile";
+import FriendsEvents from "./FriendsEvents";
+import LocationEvents from "./LocationEvents";
+
+const TABS__ = [
+  {
+    id: "events-my",
+    text: "Мои",
+    icon: <Icon28BombOutline />
+  },
+  {
+    id: "events-near",
+    text: "Рядом",
+    icon: <Icon28PlaceOutline />
+  },
+  {
+    id: "events-friends",
+    text: "Друзья",
+    icon: <Icon28GhostOutline />
+  }
+]
 
 const TabsRoot = () => {
-  const [activeStory, setActiveStory] = useState("projects-my");
+  const [activeStory, setActiveStory] = useState("events-my");
 
   const onStoryChange = (e) => {
     setActiveStory(e.currentTarget.dataset.story);
   };
 
+  const tabBarComponent = (
+    <Tabbar>
+      {TABS__.map((element, index) =>
+        <TabbarItem
+          onClick={onStoryChange}
+          selected={activeStory === element.id}
+          data-story={element.id}
+          text={element.text}
+          key={index}
+        >
+          {element.icon}
+        </TabbarItem>
+      )}
+    </Tabbar>
+  );
+
   return (
     <Epic
       activeStory={activeStory}
       tabbar={
-        <Tabbar>
-          <TabbarItem
-            onClick={onStoryChange}
-            selected={activeStory === "projects-my"}
-            data-story="projects-my"
-            text="Мои"
-          >
-            <Icon28BombOutline />
-          </TabbarItem>
-          <TabbarItem
-            onClick={onStoryChange}
-            selected={activeStory === "projects-near"}
-            data-story="projects-near"
-            text="Рядом"
-          >
-            <Icon28PlaceOutline />
-          </TabbarItem>
-          <TabbarItem
-            onClick={onStoryChange}
-            selected={activeStory === "projects-friends"}
-            data-story="projects-friends"
-            text="Друзья"
-          >
-            <Icon28GhostOutline />
-          </TabbarItem>
-        </Tabbar>
+        tabBarComponent
       }
     >
-      <View id="projects-my">
+      <View id="events-my">
         <UserProfile />
       </View>
-      <View id="projects-near">
-        <EventCardList events={[]} />
+      <View id="events-near">
+        <LocationEvents />
       </View>
-      <View id="projects-friends">
-        <EventCardList events={[]} />
+      <View id="events-friends">
+        <FriendsEvents />
       </View>
     </Epic>
   );

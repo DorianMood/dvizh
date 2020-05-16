@@ -7,8 +7,6 @@ import {
   View,
   ModalRoot,
   ModalPage,
-  Cell,
-  Switch,
   ModalPageHeader,
   Title,
 } from "@vkontakte/vkui";
@@ -16,6 +14,8 @@ import {
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
 import ProjectCard from "./EventCard";
+import Filter from "../utils/Filter";
+import FilterPanel from "./FilterPanel";
 
 const MAIN_MODAL = "main-modal";
 
@@ -24,7 +24,18 @@ const ProjectCardList = (props) => {
 
   const [currentModal, setCurrentModal] = useState(null);
 
-  
+
+  // Put filter to state to update component
+  const [filter, setFilter] = useState(new Filter(null, null));
+
+
+  const updateFilter = (data) => {
+    const {key, value} = data;
+    setFilter({
+      ...filter,
+      [key]: value
+    })
+  }
 
   const filterModal = (
     <ModalRoot
@@ -38,13 +49,14 @@ const ProjectCardList = (props) => {
         header={<ModalPageHeader><Title level="2">Фильтры</Title></ModalPageHeader>}
         dynamicContentHeight
       >
-        <Cell asideContent={<Switch />}>Рядом</Cell>
-        <Cell asideContent={<Switch />}>Скоро</Cell>
-        <Cell asideContent={<Switch />}>Комментарии к записям</Cell>
-        <Cell></Cell><Cell></Cell>
+        <FilterPanel filterValues={filter} onUpdate={updateFilter} />
       </ModalPage>
     </ModalRoot>
   );
+
+  const filteredEvents = events.filter((element) => {
+    return true;
+  });
 
   return (
     <View modal={filterModal}>

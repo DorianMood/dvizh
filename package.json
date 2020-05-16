@@ -14,6 +14,7 @@
   "author": "dorianmood",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^16.9.35",
     "cross-env": "^5.2.0",
     "gh-pages": "^2.2.0",
     "react-hot-loader": "^4.9.0",
@@ -40,6 +41,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router5": "^8.0.1",
+    "react-yandex-maps": "^4.3.0",
     "router5": "^8.0.1",
     "router5-plugin-browser": "^8.0.1",
     "router5-plugin-logger": "^8.0.1"
