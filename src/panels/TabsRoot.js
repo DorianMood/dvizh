@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter, useRoute } from "react-router5";
 import View from "@vkontakte/vkui/dist/components/View/View";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Tabbar, TabbarItem, Epic } from "@vkontakte/vkui";
@@ -10,7 +11,7 @@ import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 import UserProfile from "./UserProfile";
 import FriendsEvents from "./FriendsEvents";
 import LocationEvents from "./LocationEvents";
-import { useRouter, useRoute } from "react-router5";
+import Event from "./Event";
 
 const TABS__ = [
   {
@@ -32,10 +33,21 @@ const TABS__ = [
 
 const TabsRoot = () => {
   const { route } = useRoute();
-  const tabName = TABS__.filter(tab => tab.id === route.name)[0].id ?? TABS__[0].id;
-
+  const [activeStory, setActiveStory] = useState(null);
   const router = useRouter();
-  const [activeStory, setActiveStory] = useState(tabName);
+  const currentTab = TABS__.filter(tab => tab.id === route.name)[0];
+  const tabName = currentTab ? currentTab.id : TABS__[0].id;
+
+  useEffect(() => {
+    setActiveStory(tabName);
+  });
+
+  if (route.name === "event") {
+    return (
+      <Event />
+    );
+  }
+
 
   const onStoryChange = (e) => {
     const to = e.currentTarget.dataset.story;

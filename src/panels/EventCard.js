@@ -4,22 +4,15 @@ import { Card, Cell, Button, Avatar } from "@vkontakte/vkui";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
-import { useRouter, withRouter } from "react-router5";
+import { useRouter, withRouter, useRoute } from "react-router5";
 
 const ProjectCard = (props) => {
   const { event } = props;
-  const { projectShow, projectShowChange } = useState(null);
-  const { router } = withRouter();
-
-  if (projectShow)
-    return (
-      <>
-      show
-      </>
-    );
+  const { router } = useRoute();
+  
 
   return (
-    <Card size="l" onClick={() => {  console.log('card click') }}>
+    <Card size="l" onClick={() => { router.navigate('event', { id: event.id, event }); console.log('card click') }}>
       <Cell
         before={
           <Avatar size={32}>

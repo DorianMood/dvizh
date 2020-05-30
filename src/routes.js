@@ -3,6 +3,6 @@ export default [
   { name: "me", path: "/me" },
   { name: "friends", path: "/friends" },
   { name: "location", path: "/location" },
-  { name: "project", path: "/project/:id" },
+  { name: "event", path: "/event/:id" },
   { name: "user", path: "/user/:id" }
 ];
