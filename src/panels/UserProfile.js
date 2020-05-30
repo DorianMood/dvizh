@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Panel, Avatar, RichCell, Div, Title, Spinner } from "@vkontakte/vkui";
+import { Panel, PanelSpinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
-import Icon24User from "@vkontakte/icons/dist/24/user";
-
 import "./UserProfile.css";
-import ProjectCardList from "./EventCardList";
+import EventCardList from "./EventCardList";
+import UserHeader from "./UserHeader";
+import { useRouteNode, useRouter } from "react-router5";
 
 const GET_PROJECTS = gql`
   {
@@ -26,6 +26,9 @@ const GET_PROJECTS = gql`
 `;
 
 const UserProfile = (props) => {
+  const { route } = useRouteNode("me");
+  const router = useRouter();
+  
   // Fetch data
   const { loading, error, data } = useQuery(GET_PROJECTS);
 
@@ -53,8 +56,6 @@ const UserProfile = (props) => {
     fetchData();
   }, []);
 
-  const userName = "Никита Долгошеин";
-
   // Display loading animation
   if (loading)
     return (
@@ -62,47 +63,20 @@ const UserProfile = (props) => {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           flexDirection: "column",
+          height: "100%"
         }}
       >
-        <Spinner size="large" style={{ marginTop: 20 }} />
+        <PanelSpinner size="large" />
       </div>
     );
   if (error) return `Error: ${error.message}`;
 
   return (
     <Panel>
-      <RichCell
-        className="user-profile-header"
-        disabled
-        multiline
-        before={
-          <Avatar
-            size={72}
-            src={fetchedUser !== null ? fetchedUser.photo_200 : null}
-          >
-            {fetchedUser === null ? <Icon24User /> : null}
-          </Avatar>
-        }
-        text={
-          <Div className="user-profile-satisfied">
-            {rating.map((item, key) => (
-              <Div className="user-profile-satisfied-col" key={key}>
-                <Title level="2">{item.key}</Title>
-                <Title level="3">{item.value}</Title>
-              </Div>
-            ))}
-          </Div>
-        }
-      >
-        <Title level="2" weight="regular">
-          {fetchedUser !== null
-            ? `${fetchedUser.first_name} ${fetchedUser.last_name}`
-            : userName}
-        </Title>
-      </RichCell>
-
-      <ProjectCardList events={data.Events} />
+      <UserHeader user={fetchedUser} rating={rating} />
+      <EventCardList events={data.Events} />
     </Panel>
   );
 };

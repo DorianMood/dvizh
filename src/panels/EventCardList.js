@@ -13,21 +13,19 @@ import {
 
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
-import ProjectCard from "./EventCard";
+import EventCard from "./EventCard";
 import Filter from "../utils/Filter";
 import FilterPanel from "./FilterPanel";
+import { useRoute } from "react-router5";
 
 const MAIN_MODAL = "main-modal";
 
 const ProjectCardList = (props) => {
   const { events } = props;
-
   const [currentModal, setCurrentModal] = useState(null);
-
-
-  // Put filter to state to update component
   const [filter, setFilter] = useState(new Filter(null, null));
 
+  const { route } = useRoute();
 
   const updateFilter = (data) => {
     const {key, value} = data;
@@ -74,8 +72,8 @@ const ProjectCardList = (props) => {
         }
       >
         <CardGrid>
-          {events.map((project, key) => (
-            <ProjectCard key={key} project={project} />
+          {events.map((event, key) => (
+            <EventCard key={key} event={event} />
           ))}
         </CardGrid>
       </Group>

@@ -12,4 +12,28 @@
     flex-direction: column;
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.user-profile-satisfied-col:active > h2 {
+    color: aqua;
+    animation: rating-animation 0.4s ease-in;
+}
+
+@keyframes rating-animation {
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+    25% {
+        transform: translateY(-10px) scale(1.5);
+    }
+    50% {
+        transform: translateY(0px) scale(2);
+    }
+    75% {
+        transform: translateY(-10px) scale(1.5);
+    }
+    100% {
+        transform: translateY(0px) scale(1);
+    }
 }

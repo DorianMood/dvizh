@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { PanelHeaderButton } from "@vkontakte/vkui";
 import Icon24User from "@vkontakte/icons/dist/24/user";
+import { useRouteNode } from "react-router5";
 
 const Event = (props) => {
+  const { route } = useRouteNode('event');
   const { id, go, prev, event } = props;
 
   return (

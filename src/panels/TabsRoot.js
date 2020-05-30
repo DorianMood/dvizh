@@ -10,30 +10,37 @@ import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 import UserProfile from "./UserProfile";
 import FriendsEvents from "./FriendsEvents";
 import LocationEvents from "./LocationEvents";
+import { useRouter, useRoute } from "react-router5";
 
 const TABS__ = [
   {
-    id: "events-my",
+    id: "me",
     text: "Мои",
     icon: <Icon28BombOutline />
   },
   {
-    id: "events-near",
+    id: "location",
     text: "Рядом",
     icon: <Icon28PlaceOutline />
   },
   {
-    id: "events-friends",
+    id: "friends",
     text: "Друзья",
     icon: <Icon28GhostOutline />
   }
 ]
 
 const TabsRoot = () => {
-  const [activeStory, setActiveStory] = useState("events-my");
+  const { route } = useRoute();
+  const tabName = TABS__.filter(tab => tab.id === route.name)[0].id ?? TABS__[0].id;
+
+  const router = useRouter();
+  const [activeStory, setActiveStory] = useState(tabName);
 
   const onStoryChange = (e) => {
-    setActiveStory(e.currentTarget.dataset.story);
+    const to = e.currentTarget.dataset.story;
+    router.navigate(to);
+    setActiveStory(to);
   };
 
   const tabBarComponent = (
@@ -59,13 +66,13 @@ const TabsRoot = () => {
         tabBarComponent
       }
     >
-      <View id="events-my">
+      <View id="me" key="0">
         <UserProfile />
       </View>
-      <View id="events-near">
+      <View id="location" key="1">
         <LocationEvents />
       </View>
-      <View id="events-friends">
+      <View id="friends" key="2">
         <FriendsEvents />
       </View>
     </Epic>

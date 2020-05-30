@@ -5,6 +5,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
 import EventCardList from "./EventCardList";
+import { useRouteNode } from "react-router5";
 
 const GET_EVENTS = gql`
   {
@@ -23,9 +24,9 @@ const GET_EVENTS = gql`
 `;
 
 const FriendsEvents = (props) => {
+  const { route } = useRouteNode("friends");
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);
-
   const [friends, setFriends] = useState(null);
 
   useEffect(() => {
@@ -50,10 +51,12 @@ const FriendsEvents = (props) => {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           flexDirection: "column",
+          height: "100%"
         }}
       >
-        <Spinner size="large" style={{ marginTop: 20 }} />
+        <Spinner size="large" style={{  }} />
       </div>
     );
   if (error) return `Error: ${error.message}`;

@@ -5,12 +5,15 @@ import ApolloClient from "apollo-boost";
 
 import Meta from "./panels/Meta";
 import TabsRoot from "./panels/TabsRoot";
+import { useRoute } from "react-router5";
 
 const client = new ApolloClient({
   uri: "https://dvizh-api.herokuapp.com/",
 });
 
-const App = () => {
+const App = (props) => {
+  const router = useRoute();
+
   return (
     <>
       <Meta />

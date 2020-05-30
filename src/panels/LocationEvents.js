@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Panel, Spinner } from "@vkontakte/vkui";
+import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
-import { YMaps, Map } from 'react-yandex-maps';
+import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 import EventCardList from "./EventCardList";
+import { useRouteNode } from "react-router5";
 
 const GET_EVENTS = gql`
   {
@@ -25,9 +26,9 @@ const GET_EVENTS = gql`
 `;
 
 const LocationEvents = (props) => {
+  const { route } = useRouteNode("location");
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);
-
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
@@ -62,9 +63,13 @@ const LocationEvents = (props) => {
 
   return (
     <Panel>
-      <YMaps>
-        <Map defaultState={{ center: [56.85, 60.6], zoom: 10 }} width={'100%'} />
-      </YMaps>
+      <Div style={{ height: "240px", padding: 0 }}>
+        <YMaps >
+          <Map defaultState={{ center: [56.85, 60.6], zoom: 10 }} width={'100%'}>
+            <Placemark geometry={[56.85, 60.6]} />
+          </Map>
+        </YMaps>
+      </Div>
       <EventCardList events={data.Events} />
     </Panel>
   );

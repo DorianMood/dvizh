@@ -2,25 +2,31 @@ import "core-js/features/map";
 import "core-js/features/set";
 import React from "react";
 import ReactDOM from "react-dom";
+import { RouterProvider } from "react-router5";
+import { Provider } from "react-redux";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
-import createRouter from "./create-router";
-import { RouterProvider } from "react-router5";
+import createStore from "./store/reducers";
+import configureRouter from "./create-router";
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
 
-const router = createRouter();
+const router = configureRouter();
+const store = createStore(router);
+
 
 router.start(() => {
   ReactDOM.render(
-    <RouterProvider router={router}>
-      <App router={router} />
-    </RouterProvider>,
+    <Provider store={store}>
+      <RouterProvider router={router}>
+        <App router={router} />
+      </RouterProvider>
+    </Provider>,
     document.getElementById("root")
   );
 });
 
 if (process.env.NODE_ENV === "development") {
-  import("./eruda").then((eruda) => {}); //runtime download
+  import("./eruda").then((eruda) => { }); //runtime download
 }
