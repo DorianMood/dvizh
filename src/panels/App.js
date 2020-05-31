@@ -3,17 +3,14 @@ import "@vkontakte/vkui/dist/vkui.css";
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
 
-import Meta from "./panels/Meta";
-import TabsRoot from "./panels/TabsRoot";
-import { useRoute } from "react-router5";
+import Meta from "./components/Meta";
+import TabsRoot from "./Main/TabsRoot";
 
 const client = new ApolloClient({
   uri: "https://dvizh-api.herokuapp.com/",
 });
 
 const App = (props) => {
-  const router = useRoute();
-
   return (
     <>
       <Meta />

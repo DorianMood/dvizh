@@ -4,8 +4,7 @@ import bridge from "@vkontakte/vk-bridge";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
-import EventCardList from "./EventCardList";
-import { useRouteNode } from "react-router5";
+import EventCardList from "../Event/EventCardList";
 
 const GET_EVENTS = gql`
   {
@@ -24,7 +23,6 @@ const GET_EVENTS = gql`
 `;
 
 const FriendsEvents = (props) => {
-  const { route } = useRouteNode("friends");
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);
   const [friends, setFriends] = useState(null);

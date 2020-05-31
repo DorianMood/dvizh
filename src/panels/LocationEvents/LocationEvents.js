@@ -6,8 +6,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
-import EventCardList from "./EventCardList";
-import { useRouteNode } from "react-router5";
+import EventCardList from "../Event/EventCardList";
 
 const GET_EVENTS = gql`
   {
@@ -26,7 +25,6 @@ const GET_EVENTS = gql`
 `;
 
 const LocationEvents = (props) => {
-  const { route } = useRouteNode("location");
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);
   const [location, setLocation] = useState(null);
@@ -42,6 +40,7 @@ const LocationEvents = (props) => {
     async function fetchData() {
       const location = await bridge.send("VKWebAppGetGeodata");
       setLocation(location);
+      console.log(location);
     }
     fetchData();
   }, []);

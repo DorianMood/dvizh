@@ -8,10 +8,10 @@ import Icon28BombOutline from "@vkontakte/icons/dist/28/bomb_outline";
 import Icon28PlaceOutline from "@vkontakte/icons/dist/28/place_outline";
 import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 
-import UserProfile from "./UserProfile";
-import FriendsEvents from "./FriendsEvents";
-import LocationEvents from "./LocationEvents";
-import Event from "./Event";
+import UserProfile from "../UserProfile/UserProfile";
+import FriendsEvents from "../FriendsEvents/FriendsEvents";
+import LocationEvents from "../LocationEvents/LocationEvents";
+import Event from "../Event/Event";
 
 const TABS__ = [
   {
@@ -40,7 +40,7 @@ const TabsRoot = () => {
 
   useEffect(() => {
     setActiveStory(tabName);
-  });
+  }, [tabName]);
 
   if (route.name === "event") {
     return (

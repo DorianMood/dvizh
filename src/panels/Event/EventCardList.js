@@ -14,7 +14,7 @@ import {
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
 import EventCard from "./EventCard";
-import Filter from "../utils/Filter";
+import Filter from "../../utils/Filter";
 import FilterPanel from "./FilterPanel";
 import { useRoute } from "react-router5";
 

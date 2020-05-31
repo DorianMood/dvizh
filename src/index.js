@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { RouterProvider } from "react-router5";
 import { Provider } from "react-redux";
 import bridge from "@vkontakte/vk-bridge";
-import App from "./App";
+import App from "./panels/App";
 import createStore from "./store/reducers";
 import configureRouter from "./create-router";
 

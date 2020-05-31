@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Card, Cell, Button, Avatar } from "@vkontakte/vkui";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
-import { useRouter, withRouter, useRoute } from "react-router5";
+import { useRoute } from "react-router5";
 
 const ProjectCard = (props) => {
   const { event } = props;

@@ -5,9 +5,8 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
 import "./UserProfile.css";
-import EventCardList from "./EventCardList";
+import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
-import { useRouteNode, useRouter } from "react-router5";
 
 const GET_PROJECTS = gql`
   {
@@ -26,8 +25,6 @@ const GET_PROJECTS = gql`
 `;
 
 const UserProfile = (props) => {
-  const { route } = useRouteNode("me");
-  const router = useRouter();
   
   // Fetch data
   const { loading, error, data } = useQuery(GET_PROJECTS);
