@@ -27,7 +27,7 @@ const GET_EVENTS = gql`
 const LocationEvents = (props) => {
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState([56.85, 60.6]);
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -39,8 +39,7 @@ const LocationEvents = (props) => {
     });
     async function fetchData() {
       const location = await bridge.send("VKWebAppGetGeodata");
-      setLocation(location);
-      console.log(location);
+      setLocation([location.lat, location.long]);
     }
     fetchData();
   }, []);
@@ -60,12 +59,14 @@ const LocationEvents = (props) => {
     );
   if (error) return `Error: ${error.message}`;
 
+  console.log(location);
+
   return (
     <Panel>
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps >
-          <Map defaultState={{ center: [56.85, 60.6], zoom: 10 }} width={'100%'}>
-            <Placemark geometry={[56.85, 60.6]} />
+          <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
+            <Placemark geometry={location} options={{preset: "islands#geolocationIcon"}} />
           </Map>
         </YMaps>
       </Div>
