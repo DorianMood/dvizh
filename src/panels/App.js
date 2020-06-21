@@ -13,6 +13,8 @@ const client = new ApolloClient({
 
 dotenv.config();
 
+// TODO: login or signup user here.
+
 const App = (props) => {
   return (
     <>

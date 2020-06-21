@@ -33,16 +33,6 @@ database.ref("events/").on("value", (dataSnapshot) => {
   console.log(dataSnapshot.val());
 });
 
-// database.ref("events/").push({
-//   description: "Побегаем, начнем с плотинки, потом попьем чаю с пирогами.",
-//   location: {
-//     lat: 56,
-//     lng: 56
-//   },
-//   name: "Пробежка на Плотинке",
-//   price: 0
-// });
-
 router.start(() => {
   ReactDOM.render(
     <RouterProvider router={router}>

@@ -24,6 +24,11 @@ const GET_EVENTS = gql`
   }
 `;
 
+/*
+  TODO : use Firebase events query instead of graphql.
+  Get all the events near certain location.
+*/
+
 const LocationEvents = (props) => {
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);

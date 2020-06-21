@@ -22,6 +22,11 @@ const GET_EVENTS = gql`
   }
 `;
 
+/*
+  TODO : use Firebase events query instead of graphql.
+  Get all the events that are related to users friends.
+*/
+
 const FriendsEvents = (props) => {
   // Fetch data
   const { loading, error, data } = useQuery(GET_EVENTS);

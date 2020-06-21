@@ -24,6 +24,11 @@ const GET_PROJECTS = gql`
   }
 `;
 
+/*
+  TODO : use Firebase events query instead of graphql.
+  Get all the events of certain user.
+*/
+
 const UserProfile = (props) => {
   
   // Fetch data
