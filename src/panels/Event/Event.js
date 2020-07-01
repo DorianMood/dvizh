@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouteNode } from "react-router5";
 import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Avatar, Button} from "@vkontakte/vkui";
 import Icon24Back from "@vkontakte/icons/dist/24/back";

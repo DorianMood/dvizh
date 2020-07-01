@@ -1,38 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Panel, PanelSpinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
-import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import firebase from "firebase/app";
 
 import "./UserProfile.css";
 import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
 
-const GET_PROJECTS = gql`
-  {
-    Events(id: "123") {
-      id
-      name
-      description
-      price
-      location {
-        lat
-        lng
-        name
-      }
-    }
-  }
-`;
-
-/*
-  TODO : use Firebase events query instead of graphql.
-  Get all the events of certain user.
-*/
-
 const UserProfile = (props) => {
-  
+
   // Fetch data
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const database = firebase.database();
+  const [loading, setLoading] = useState(true);
 
   const rating = [
     { key: "😊", value: 101 },
@@ -42,6 +21,7 @@ const UserProfile = (props) => {
   ];
 
   const [fetchedUser, setUser] = useState(null);
+  const [fetchedEvents, setEvents] = useState([]);
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -52,11 +32,26 @@ const UserProfile = (props) => {
       }
     });
     async function fetchData() {
+      // User data
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
     fetchData();
-  }, []);
+  }, [database]);
+
+  useEffect(() => {
+    function fetchEvents() {
+      // Events data
+      database.ref("events").on("value", dataSnapshot => {
+        const events = Object.entries(dataSnapshot.val()).map(e => {
+          return { id: e[0],  ...e[1]};
+        });
+        setEvents(events);
+        setLoading(false);
+      });
+    }
+    fetchEvents();
+  }, [database]);
 
   // Display loading animation
   if (loading)
@@ -73,12 +68,11 @@ const UserProfile = (props) => {
         <PanelSpinner size="large" />
       </div>
     );
-  if (error) return `Error: ${error.message}`;
 
   return (
     <Panel>
       <UserHeader user={fetchedUser} rating={rating} />
-      <EventCardList events={data.Events} />
+      <EventCardList events={fetchedEvents} />
     </Panel>
   );
 };

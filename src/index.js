@@ -8,7 +8,7 @@ import { RouterProvider } from "react-router5";
 
 import bridge from "@vkontakte/vk-bridge";
 
-import firebase from "firebase/app";
+import firebase, { auth } from "firebase/app";
 import "firebase/database";
 
 import App from "./panels/App";
@@ -20,7 +20,11 @@ const VK_ID = "secret-vk-id";
 
 const router = configureRouter();
 
+// TODO: login or signup user here.
+
+
 // Firebase Config
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   projectId: process.env.REACT_APP_PROJECT_ID,
@@ -28,10 +32,6 @@ const config = {
   authDomain: process.env.REACT_APP_AUTH_DOMAIN
 };
 firebase.initializeApp(config);
-var database = firebase.database();
-database.ref("events/").on("value", (dataSnapshot) => {
-  console.log(dataSnapshot.val());
-});
 
 router.start(() => {
   ReactDOM.render(

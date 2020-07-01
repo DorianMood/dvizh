@@ -1,51 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Panel, Spinner } from "@vkontakte/vkui";
-import bridge from "@vkontakte/vk-bridge";
-import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import firebase from "firebase/app";
 
 import EventCardList from "../Event/EventCardList";
 
-const GET_EVENTS = gql`
-  {
-    Events(id: "123") {
-      id
-      name
-      description
-      price
-      location {
-        lat
-        lng
-        name
-      }
-    }
-  }
-`;
-
-/*
-  TODO : use Firebase events query instead of graphql.
-  Get all the events that are related to users friends.
-*/
-
 const FriendsEvents = (props) => {
+  
   // Fetch data
-  const { loading, error, data } = useQuery(GET_EVENTS);
-  const [friends, setFriends] = useState(null);
+  const database = firebase.database();
+  const [loading, setLoading] = useState(true);
+
+  const [fetchedEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    bridge.subscribe(({ detail: { type, data } }) => {
-      if (type === "VKWebAppUpdateConfig") {
-        const schemeAttribute = document.createAttribute("scheme");
-        schemeAttribute.value = data.scheme ? data.scheme : "client_light";
-        document.body.attributes.setNamedItem(schemeAttribute);
-      }
-    });
-    async function fetchData() {
-      const friends = await bridge.send("VKWebAppGetFriends");
-      setFriends(friends);
+    function fetchEvents() {
+      // Events data
+      database.ref("events").on("value", dataSnapshot => {
+        const events = Object.entries(dataSnapshot.val()).map(e => {
+          return { id: e[0],  ...e[1]};
+        });
+        setEvents(events);
+        setLoading(false);
+      });
     }
-    fetchData();
-  }, []);
+    fetchEvents();
+  }, [database]);
 
   // Display loading animation
   if (loading)
@@ -62,11 +41,10 @@ const FriendsEvents = (props) => {
         <Spinner size="large" style={{  }} />
       </div>
     );
-  if (error) return `Error: ${error.message}`;
 
   return (
     <Panel>
-      <EventCardList events={data.Events} />
+      <EventCardList events={fetchedEvents} />
     </Panel>
   );
 };

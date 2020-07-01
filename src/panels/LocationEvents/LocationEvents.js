@@ -1,37 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
-import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import firebase from "firebase/app";
 
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
 
-const GET_EVENTS = gql`
-  {
-    Events(id: "123") {
-      id
-      name
-      description
-      price
-      location {
-        lat
-        lng
-        name
-      }
-    }
-  }
-`;
-
-/*
-  TODO : use Firebase events query instead of graphql.
-  Get all the events near certain location.
-*/
-
 const LocationEvents = (props) => {
+  
   // Fetch data
-  const { loading, error, data } = useQuery(GET_EVENTS);
+  const database = firebase.database();
+  const [loading, setLoading] = useState(true);
+
+  const [fetchedEvents, setEvents] = useState([]);
   const [location, setLocation] = useState([56.85, 60.6]);
 
   useEffect(() => {
@@ -49,6 +31,21 @@ const LocationEvents = (props) => {
     fetchData();
   }, []);
 
+  
+  useEffect(() => {
+    function fetchEvents() {
+      // Events data
+      database.ref("events").on("value", dataSnapshot => {
+        const events = Object.entries(dataSnapshot.val()).map(e => {
+          return { id: e[0],  ...e[1]};
+        });
+        setEvents(events);
+        setLoading(false);
+      });
+    }
+    fetchEvents();
+  }, [database]);
+
   // Display loading animation
   if (loading)
     return (
@@ -62,9 +59,6 @@ const LocationEvents = (props) => {
         <Spinner size="large" style={{ marginTop: 20 }} />
       </div>
     );
-  if (error) return `Error: ${error.message}`;
-
-  console.log(location);
 
   return (
     <Panel>
@@ -72,10 +66,16 @@ const LocationEvents = (props) => {
         <YMaps >
           <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
             <Placemark geometry={location} options={{preset: "islands#geolocationIcon"}} />
+            {
+              fetchedEvents.map(event => {
+                const geometry = [event.location.lat, event.location.lng];
+                return (<Placemark geometry={geometry} />)
+              })
+            }
           </Map>
         </YMaps>
       </Div>
-      <EventCardList events={data.Events} />
+      <EventCardList events={fetchedEvents} />
     </Panel>
   );
 };
