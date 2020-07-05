@@ -6,6 +6,7 @@ import firebase from "firebase/app";
 import "./UserProfile.css";
 import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
+import EventAdd from "../components/EventAdd";
 
 const UserProfile = (props) => {
 
@@ -47,6 +48,7 @@ const UserProfile = (props) => {
           return { id: e[0],  ...e[1]};
         });
         setEvents(events);
+        console.log(events);
         setLoading(false);
       });
     }
@@ -73,6 +75,7 @@ const UserProfile = (props) => {
     <Panel>
       <UserHeader user={fetchedUser} rating={rating} />
       <EventCardList events={fetchedEvents} />
+      <EventAdd />
     </Panel>
   );
 };

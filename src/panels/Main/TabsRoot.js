@@ -12,6 +12,7 @@ import UserProfile from "../UserProfile/UserProfile";
 import FriendsEvents from "../FriendsEvents/FriendsEvents";
 import LocationEvents from "../LocationEvents/LocationEvents";
 import Event from "../Event/Event";
+import EventCreate from "../components/EventCreate";
 
 const TABS__ = [
   {
@@ -45,6 +46,10 @@ const TabsRoot = () => {
   if (route.name === "event") {
     return (
       <Event />
+    );
+  } else if (route.name === "create") {
+    return (
+      <EventCreate />
     );
   }
 

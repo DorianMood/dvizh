@@ -4,5 +4,6 @@ export default [
   { name: "friends", path: "/friends" },
   { name: "location", path: "/location" },
   { name: "event", path: "/event/:id" },
-  { name: "user", path: "/user/:id" }
+  { name: "user", path: "/user/:id" },
+  { name: "create", path: "/create" }
 ];

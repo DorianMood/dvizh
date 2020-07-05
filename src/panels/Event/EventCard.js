@@ -7,9 +7,9 @@ import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
 import { useRoute } from "react-router5";
 
 const ProjectCard = (props) => {
+  
   const { event } = props;
   const { router } = useRoute();
-  
 
   return (
     <Card size="l" onClick={() => { router.navigate('event', { id: event.id, event }); console.log('card click') }}>
