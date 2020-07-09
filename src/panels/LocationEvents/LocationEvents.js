@@ -65,10 +65,10 @@ const LocationEvents = (props) => {
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps >
           <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
-            <Placemark geometry={location} options={{preset: "islands#geolocationIcon"}} />
+            <Placemark geometry={location} options={{preset: "islands#redCircleDotIcon"}} />
             {
               fetchedEvents.map(event => {
-                const geometry = [event.location.lat, event.location.lng];
+                const geometry = [event.location.lng, event.location.lat];
                 return (<Placemark geometry={geometry} />)
               })
             }
