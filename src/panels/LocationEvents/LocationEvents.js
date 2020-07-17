@@ -3,9 +3,11 @@ import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
 
-import { YMaps, Map, Placemark } from 'react-yandex-maps';
+import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
+import Filter from "../../utils/Filter";
+import { isConstructorDeclaration } from "typescript";
 
 const LocationEvents = (props) => {
   
@@ -15,7 +17,9 @@ const LocationEvents = (props) => {
 
   const [fetchedEvents, setEvents] = useState([]);
   const [location, setLocation] = useState([56.85, 60.6]);
+  const [filter, setFilter] = useState(new Filter(null, null));
 
+  
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
       if (type === "VKWebAppUpdateConfig") {
@@ -30,7 +34,7 @@ const LocationEvents = (props) => {
     }
     fetchData();
   }, []);
-
+  
   
   useEffect(() => {
     function fetchEvents() {
@@ -45,11 +49,17 @@ const LocationEvents = (props) => {
     }
     fetchEvents();
   }, [database]);
+  
+  // Fetched here
+  fetchedEvents.map(event => {
+    if (filter['location'])
+      console.log('LOCATION', filter['location']);
+  });
 
   // Display loading animation
   if (loading)
-    return (
-      <div
+  return (
+    <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -72,10 +82,11 @@ const LocationEvents = (props) => {
                 return (<Placemark geometry={geometry} />)
               })
             }
+            <Circle geometry={[location, filter['location'] /*metrs*/]} />
           </Map>
         </YMaps>
       </Div>
-      <EventCardList events={fetchedEvents} />
+      <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
     </Panel>
   );
 };

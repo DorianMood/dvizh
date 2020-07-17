@@ -35,8 +35,8 @@ const Event = (props) => {
       </PanelHeader>
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps>
-          <Map defaultState={{ center: [event.location.lat, event.location.lng], zoom: 10 }} width={'100%'}>
-            <Placemark geometry={[event.location.lat, event.location.lng]} options={{ preset: "islands#geolocationIcon" }} />
+          <Map defaultState={{ center: [event.location.lng, event.location.lat], zoom: 10 }} width={'100%'}>
+            <Placemark geometry={[event.location.lng, event.location.lat]} options={{ preset: "islands#geolocationIcon" }} />
           </Map>
         </YMaps>
       </Div>

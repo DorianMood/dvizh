@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import PropTypes, { element } from "prop-types";
 import {
   Group,
   CardGrid,
@@ -20,23 +20,36 @@ import FilterPanel from "./FilterPanel";
 const MAIN_MODAL = "main-modal";
 
 const ProjectCardList = (props) => {
-  const { events } = props;
+  const { events, filter, setFilter } = props;
   const [currentModal, setCurrentModal] = useState(null);
-  const [filter, setFilter] = useState(new Filter(null, null));
+  const [innerFilter, setInnerFilter] = useState(filter);
+
+  useEffect(() => {
+    setInnerFilter(filter);
+  }, []);
+
 
   const updateFilter = (data) => {
-    const {key, value} = data;
-    setFilter({
+    const { key, value } = data;
+    setInnerFilter({
       ...filter,
       [key]: value
     })
   }
+
+  let filteredEvents = events.filter((element) => {
+    return element;
+  });
 
   const filterModal = (
     <ModalRoot
       activeModal={currentModal}
       onClose={() => {
         setCurrentModal(null);
+        setFilter(innerFilter);
+        filteredEvents = events.filter((element) => {
+          return element;
+        });
       }}
     >
       <ModalPage
@@ -44,14 +57,11 @@ const ProjectCardList = (props) => {
         header={<ModalPageHeader><Title level="2">Фильтры</Title></ModalPageHeader>}
         dynamicContentHeight
       >
-        <FilterPanel filterValues={filter} onUpdate={updateFilter} />
+        <FilterPanel filterValues={innerFilter} onUpdate={updateFilter} />
       </ModalPage>
     </ModalRoot>
   );
 
-  const filteredEvents = events.filter((element) => {
-    return true;
-  });
 
   return (
     <View modal={filterModal}>
@@ -80,6 +90,8 @@ const ProjectCardList = (props) => {
 
 ProjectCardList.propTypes = {
   events: PropTypes.array.isRequired,
+  filter: PropTypes.objectOf(Filter).isRequired,
+  setFilter: PropTypes.func.isRequired
 };
 
 export default ProjectCardList;
