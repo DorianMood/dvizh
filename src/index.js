@@ -10,6 +10,7 @@ import bridge from "@vkontakte/vk-bridge";
 
 import firebase, { auth } from "firebase/app";
 import "firebase/database";
+import "firebase/auth";
 
 import App from "./panels/App";
 import configureRouter from "./create-router";
@@ -19,8 +20,6 @@ bridge.send("VKWebAppInit");
 const VK_ID = "secret-vk-id";
 
 const router = configureRouter();
-
-// TODO: login or signup user here.
 
 
 // Firebase Config
@@ -32,6 +31,26 @@ const config = {
   authDomain: process.env.REACT_APP_AUTH_DOMAIN
 };
 firebase.initializeApp(config);
+
+// TODO: login or signup user here.
+
+let fauth = firebase.auth();
+
+fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+  console.log("create user : OK");
+  console.log(e);
+}).catch((e) => {
+  console.log("create user : ERROR");
+  console.error(e.code);
+}).then(() => {
+  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+    console.log("login : OK");
+    console.log(e);
+  }).catch((e) => {
+    console.log("login : ERROR");
+    console.log(e);
+  })
+});
 
 router.start(() => {
   ReactDOM.render(
