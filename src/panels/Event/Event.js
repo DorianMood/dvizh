@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouteNode } from "react-router5";
-import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Avatar, Button} from "@vkontakte/vkui";
+import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Avatar, Button, Group, Header, Card, CardGrid, UsersStack } from "@vkontakte/vkui";
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
@@ -14,7 +14,7 @@ const Event = (props) => {
   const { route } = useRouteNode('event');
 
   const { id, event: propsEvent } = route.params;
-  const [ event , setEvent ] = useState(propsEvent);
+  const [event, setEvent] = useState(propsEvent);
 
   const database = firebase.database();
 
@@ -49,34 +49,40 @@ const Event = (props) => {
         </YMaps>
       </Div>
 
-      <Cell
-        before={
-          <Avatar size={64}>
-            <Icon24User />
-          </Avatar>
-        }
-        size="l"
-        description={
-          <div style={{ display: "flex" }}>
-            <Icon16Place />
-            {event.location.name}
-          </div>
-        }
-        asideContent={
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Icon24MoneyCircle />
-            <div style={{ display: "flex" }}>{Math.round(event.price)}</div>
-            <div style={{ display: "flex" }}>
-              <Button size="m" onClick={(e) => { e.stopPropagation(); console.log('click will participate') }}>Пойду</Button>
-            </div>
-          </div>
-        }
-        bottomContent={
-            event.description
-        }
-      >
-        {event.name}
-      </Cell>
+      <Group header={<Header mode="secondary">Описание</Header>}>
+        <Cell multiline size="l">
+          {event.description}
+        </Cell>
+      </Group>
+
+      <Group header={<Header mode="secondary">Информация</Header>}>
+        <CardGrid>
+          <Card size="l">
+            <UsersStack
+              photos={[
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1"
+              ]}
+              size="m"
+              layout="vertical"
+            >1337 участников</UsersStack>
+          </Card>
+          <Card size="s">
+            <Cell asideContent={Math.round(event.price)}>
+              <Icon24MoneyCircle fill={"#3f8ae0"} />
+            </Cell>
+          </Card>
+        </CardGrid>
+        <CardGrid>
+          <Card size="l">
+            <Div style={{display: "flex"}}>
+              <Button stretched style={{margin: "10px"}}>Пойду</Button>
+              <Button stretched mode="commerce" style={{margin: "10px"}}>Проголосовать</Button>
+            </Div>
+          </Card>
+        </CardGrid>
+      </Group>
     </Panel>
   );
 };
