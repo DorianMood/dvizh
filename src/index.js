@@ -34,23 +34,24 @@ firebase.initializeApp(config);
 
 // TODO: login or signup user here.
 
-let fauth = firebase.auth();
+//let fauth = firebase.auth();
 
-fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-  console.log("create user : OK");
-  console.log(e);
-}).catch((e) => {
-  console.log("create user : ERROR");
-  console.error(e.code);
-}).then(() => {
-  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-    console.log("login : OK");
-    console.log(e);
-  }).catch((e) => {
-    console.log("login : ERROR");
-    console.log(e);
-  })
-});
+//fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+//  console.log("create user : OK");
+//  console.log(e);
+//}).catch((e) => {
+//  console.log("create user : ERROR");
+//  console.error(e.code);
+//}).then(() => {
+//  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+//    console.log("login : OK");
+//    console.log(e);
+//  }).catch((e) => {
+//    console.log("login : ERROR");
+//    console.log(e);
+//  })
+//});
+
 
 router.start(() => {
   ReactDOM.render(

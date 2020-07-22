@@ -6,20 +6,28 @@ import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
 import Icon24User from "@vkontakte/icons/dist/28/user";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
+import firebase from "firebase";
+import "@react-firebase/database";
+
 
 const Event = (props) => {
   const { route } = useRouteNode('event');
 
-  const { id, event } = route.params;
+  const { id, event: propsEvent } = route.params;
+  const [ event , setEvent ] = useState(propsEvent);
 
-  const [mapMount, setMapMount] = useState(false);
+  const database = firebase.database();
 
   useEffect(() => {
-    setMapMount(true);
-  }, [mapMount]);
+    if (!propsEvent) {
+      database.ref(`events/${id}`).on("value", (snapshot) => {
+        setEvent(snapshot.val());
+      });
+    }
+  }, []);
 
   if (!event) {
-    console.log(event);
+    return <Spinner size="large" />
   }
 
   return (
@@ -31,7 +39,7 @@ const Event = (props) => {
           </PanelHeaderButton>
         }
       >
-        {event.name}
+        <h5>{event.name}</h5>
       </PanelHeader>
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps>
