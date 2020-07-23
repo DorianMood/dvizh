@@ -24,11 +24,6 @@ const TABS__ = [
     id: "location",
     text: "Рядом",
     icon: <Icon28PlaceOutline />
-  },
-  {
-    id: "friends",
-    text: "Друзья",
-    icon: <Icon28GhostOutline />
   }
 ]
 
@@ -88,9 +83,6 @@ const TabsRoot = () => {
       </View>
       <View id="location" key="1">
         <LocationEvents />
-      </View>
-      <View id="friends" key="2">
-        <FriendsEvents />
       </View>
     </Epic>
   );

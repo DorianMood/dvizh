@@ -10,16 +10,9 @@ import {
 
 const FilterPanel = (props) => {
 
-  const { filterValues, onUpdate } = props;
-  
-  
-  useEffect(() => {
-    onUpdate({key: 'location', value: 1});
-  }, []);
-  
+  const { filterValues, onUpdate } = props;  
 
   // TODO : check rerendering here
-  //console.log('Filter pannel ', filterValues);
 
   return (
     <FormLayout>
@@ -27,7 +20,7 @@ const FilterPanel = (props) => {
         min={500}
         max={50 * 1000}
         step={500}
-        value={filterValues['location']}
+        value={filterValues['location'] === null ? 1 : filterValues['location']}
         onChange={(value) => onUpdate({ key: 'location', value: value })}
         top={`В радиусе ${filterValues['location']} м`}
       />

@@ -7,6 +7,7 @@ import "./UserProfile.css";
 import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
 import EventAdd from "../components/EventAdd";
+import Filter from "../../utils/Filter";
 
 const UserProfile = (props) => {
 
@@ -23,6 +24,7 @@ const UserProfile = (props) => {
 
   const [fetchedUser, setUser] = useState(null);
   const [fetchedEvents, setEvents] = useState([]);
+  const [filter, setFilter] = useState(new Filter(0, null));
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -48,7 +50,6 @@ const UserProfile = (props) => {
           return { id: e[0],  ...e[1]};
         });
         setEvents(events);
-        console.log(events);
         setLoading(false);
       });
     }
@@ -74,7 +75,7 @@ const UserProfile = (props) => {
   return (
     <Panel>
       <UserHeader user={fetchedUser} rating={rating} />
-      <EventCardList events={fetchedEvents} />
+      <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
       <EventAdd />
     </Panel>
   );

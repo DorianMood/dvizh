@@ -17,7 +17,7 @@ const LocationEvents = (props) => {
 
   const [fetchedEvents, setEvents] = useState([]);
   const [location, setLocation] = useState([56.85, 60.6]);
-  const [filter, setFilter] = useState(new Filter(null, null));
+  const [filter, setFilter] = useState(new Filter(0, null));
 
   
   useEffect(() => {
