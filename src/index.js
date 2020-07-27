@@ -24,6 +24,8 @@ const router = configureRouter();
 
 // Firebase Config
 
+console.log(process.env.REACT_APP_YANDEX_KEY);
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   projectId: process.env.REACT_APP_PROJECT_ID,

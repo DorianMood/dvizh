@@ -22,6 +22,3 @@ const EventAdd = () => {
 };
 
 export default EventAdd;
-
-
-

@@ -5,6 +5,8 @@ import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
 import Icon24User from "@vkontakte/icons/dist/28/user";
+import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
+import Icon56CheckCircleOutline from '@vkontakte/icons/dist/56/check_circle_outline';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
 import "@react-firebase/database";
@@ -56,8 +58,17 @@ const Event = (props) => {
       </Group>
 
       <Group header={<Header mode="secondary">Информация</Header>}>
-        <CardGrid>
-          <Card size="l">
+        <Div>
+          <div style={{
+            backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg)",
+            backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg), linear-gradient(90deg, #fff 0%, #000 100%)",
+            height: "200px",
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "center",
+            paddingBottom: "6px",
+            borderRadius: 12
+          }}>
             <UsersStack
               photos={[
                 "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
@@ -66,22 +77,19 @@ const Event = (props) => {
               ]}
               size="m"
               layout="vertical"
+              style={{ color: "#fff" }}
             >1337 участников</UsersStack>
-          </Card>
-          <Card size="s">
-            <Cell asideContent={Math.round(event.price)}>
-              <Icon24MoneyCircle fill={"#3f8ae0"} />
-            </Cell>
-          </Card>
-        </CardGrid>
-        <CardGrid>
-          <Card size="l">
-            <Div style={{display: "flex"}}>
-              <Button stretched style={{margin: "10px"}}>Пойду</Button>
-              <Button stretched mode="commerce" style={{margin: "10px"}}>Проголосовать</Button>
-            </Div>
-          </Card>
-        </CardGrid>
+          </div>
+        </Div>
+        <Cell asideContent={Math.round(event.price)}>
+          <Icon24MoneyCircle fill={"#3f8ae0"} />
+        </Cell>
+        <Div style={{ display: "flex" }}>
+          <Icon56CheckCircleOutline />
+          <Button stretched style={{ margin: "10px" }}>Пойду</Button>
+          
+        </Div>
+        <Icon28QrCodeOutline />
       </Group>
     </Panel>
   );
