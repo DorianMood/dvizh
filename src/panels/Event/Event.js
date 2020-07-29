@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouteNode } from "react-router5";
-import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Avatar, Button, Group, Header, Card, CardGrid, UsersStack } from "@vkontakte/vkui";
+import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Group, Header, UsersStack } from "@vkontakte/vkui";
 import Icon24Back from "@vkontakte/icons/dist/24/back";
-import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
-import Icon24User from "@vkontakte/icons/dist/28/user";
 import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
 import Icon56CheckCircleOutline from '@vkontakte/icons/dist/56/check_circle_outline';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
@@ -26,7 +24,7 @@ const Event = (props) => {
         setEvent(snapshot.val());
       });
     }
-  }, []);
+  }, [database, id, propsEvent]);
 
   if (!event) {
     return <Spinner size="large" />
@@ -61,7 +59,6 @@ const Event = (props) => {
         <Div>
           <div style={{
             backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg)",
-            backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg), linear-gradient(90deg, #fff 0%, #000 100%)",
             height: "200px",
             display: "flex",
             alignItems: "flex-end",

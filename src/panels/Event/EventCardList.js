@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PropTypes, { element } from "prop-types";
+import PropTypes from "prop-types";
 import {
   Group,
   CardGrid,
@@ -14,7 +14,6 @@ import {
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
 
 import EventCard from "./EventCard";
-import Filter from "../../utils/Filter";
 import FilterPanel from "./FilterPanel";
 
 const MAIN_MODAL = "main-modal";
@@ -27,7 +26,7 @@ const ProjectCardList = (props) => {
   
   useEffect(() => {
     setInnerFilter(filter);
-  }, []);
+  }, [filter]);
   
   
   const updateFilter = (data) => {
@@ -79,7 +78,7 @@ const ProjectCardList = (props) => {
         }
       >
         <CardGrid>
-          {events.map((event, key) => (
+          {filteredEvents.map((event, key) => (
             <EventCard key={key} event={event} />
           ))}
         </CardGrid>
@@ -90,7 +89,7 @@ const ProjectCardList = (props) => {
 
 ProjectCardList.propTypes = {
   events: PropTypes.array.isRequired,
-  filter: PropTypes.objectOf(Filter).isRequired,
+  filter: PropTypes.object.isRequired,
   setFilter: PropTypes.func.isRequired
 };
 

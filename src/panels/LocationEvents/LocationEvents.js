@@ -7,7 +7,6 @@ import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
 import Filter from "../../utils/Filter";
-import { isConstructorDeclaration } from "typescript";
 
 const LocationEvents = (props) => {
   
@@ -54,6 +53,7 @@ const LocationEvents = (props) => {
   fetchedEvents.map(event => {
     if (filter['location'])
       console.log('LOCATION', filter['location']);
+    return event;
   });
 
   // Display loading animation
@@ -77,9 +77,9 @@ const LocationEvents = (props) => {
           <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
             <Placemark geometry={location} options={{preset: "islands#redCircleDotIcon"}} />
             {
-              fetchedEvents.map(event => {
+              fetchedEvents.map((event, id) => {
                 const geometry = [event.location.lng, event.location.lat];
-                return (<Placemark geometry={geometry} />)
+                return (<Placemark key={id} geometry={geometry} />)
               })
             }
             <Circle geometry={[location, filter['location'] /*metrs*/]} />

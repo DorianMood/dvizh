@@ -8,24 +8,20 @@ import { RouterProvider } from "react-router5";
 
 import bridge from "@vkontakte/vk-bridge";
 
-import firebase, { auth } from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
 import App from "./panels/App";
 import configureRouter from "./create-router";
+import AuthProvider from "./auth/AuthProvider";
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
-const VK_ID = "secret-vk-id";
 
 const router = configureRouter();
 
-
 // Firebase Config
-
-console.log(process.env.REACT_APP_YANDEX_KEY);
-
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   projectId: process.env.REACT_APP_PROJECT_ID,
@@ -36,30 +32,29 @@ firebase.initializeApp(config);
 
 // TODO: login or signup user here.
 
-//let fauth = firebase.auth();
+let fauth = firebase.auth();
 
-//fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-//  console.log("create user : OK");
-//  console.log(e);
-//}).catch((e) => {
-//  console.log("create user : ERROR");
-//  console.error(e.code);
-//}).then(() => {
-//  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-//    console.log("login : OK");
-//    console.log(e);
-//  }).catch((e) => {
-//    console.log("login : ERROR");
-//    console.log(e);
-//  })
-//});
+fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+  console.log("create user : OK");
+}).catch((e) => {
+  console.error(e.code);
+}).then(() => {
+  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
+    console.log("login : OK");
+  }).catch((e) => {
+    console.log(e.code);
+  })
+});
 
 
 router.start(() => {
   ReactDOM.render(
-    <RouterProvider router={router}>
-      <App router={router} />
-    </RouterProvider>,
+    <AuthProvider>
+      <RouterProvider router={router}>
+        <App router={router} />
+      </RouterProvider>
+    </AuthProvider>
+    ,
     document.getElementById("root")
   );
 });

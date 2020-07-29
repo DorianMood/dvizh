@@ -6,10 +6,8 @@ import { Tabbar, TabbarItem, Epic } from "@vkontakte/vkui";
 
 import Icon28BombOutline from "@vkontakte/icons/dist/28/bomb_outline";
 import Icon28PlaceOutline from "@vkontakte/icons/dist/28/place_outline";
-import Icon28GhostOutline from "@vkontakte/icons/dist/28/ghost_outline";
 
 import UserProfile from "../UserProfile/UserProfile";
-import FriendsEvents from "../FriendsEvents/FriendsEvents";
 import LocationEvents from "../LocationEvents/LocationEvents";
 import Event from "../Event/Event";
 import EventCreate from "../components/EventCreate";

@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Switch,
   Cell,
-  Div,
   Slider,
   FormLayout
 } from "@vkontakte/vkui";
@@ -33,7 +32,6 @@ const FilterPanel = (props) => {
 
 FilterPanel.propTypes = {
   onUpdate: PropTypes.func.isRequired,
-  filterValues: PropTypes.object.isRequired
 };
 
 export default FilterPanel;
