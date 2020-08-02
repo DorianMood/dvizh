@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import {
   Panel,
   PanelHeader,
@@ -24,10 +24,16 @@ const EventCreate = () => {
 
   console.log(firebaseUser);
 
-  // TODO : assign user id to event
 
+  let userIds = {
+    firebaseId: firebaseUser.uid,
+    vkId: ""
+  };
 
   const database = firebase.database();
+
+  // TODO : form refs to get rid of rerendering
+  const eventName = useRef();
 
   const [location, setLocation] = useState([56.83890, 60.605192]);
   const [locationName, setLocationName] = useState('Место');
@@ -40,13 +46,17 @@ const EventCreate = () => {
       name: locationName,
       lng: location[0],
       lat: location[1]
-    }
+    },
+    date: Date.now(),
+    user: userIds // TODO : set vk user id
   });
 
   useEffect(() => {
     async function fetchData() {
       const location = await bridge.send("VKWebAppGetGeodata");
       setUserLocation([location.lat, location.long]);
+      const user = await bridge.send("VKWebAppGetUserInfo");
+      userIds.vkId = user.id;
     }
     fetchData();
   }, []);
@@ -70,7 +80,8 @@ const EventCreate = () => {
           name: locationName,
           lng: location[0],
           lat: location[1]
-        }
+        },
+        user: userIds
       }
     );
   }

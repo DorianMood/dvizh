@@ -54,7 +54,7 @@ const UserProfile = (props) => {
       // Events data
       database.ref("events").on("value", dataSnapshot => {
         const events = Object.entries(dataSnapshot.val()).map(e => {
-          return { id: e[0],  ...e[1]};
+          return { id: e[0], ...e[1] };
         });
         setEvents(events);
         setLoading(false);

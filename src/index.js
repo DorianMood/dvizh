@@ -12,6 +12,8 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
+import { v4 as uuidv4 } from "uuid";
+
 import App from "./panels/App";
 import configureRouter from "./create-router";
 import AuthProvider from "./auth/AuthProvider";
@@ -34,18 +36,41 @@ firebase.initializeApp(config);
 
 let fauth = firebase.auth();
 
-fauth.createUserWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-  console.log("create user : OK");
-}).catch((e) => {
-  console.error(e.code);
-}).then(() => {
-  fauth.signInWithEmailAndPassword("dorianmood@163.com", "hello123").then((e) => {
-    console.log("login : OK");
-  }).catch((e) => {
-    console.log(e.code);
-  })
-});
+const logIn = async () => {
+  const storage = await bridge.send("VKWebAppStorageGet", {
+    keys: [
+      "userUuid"
+    ]
+  });
+  const user = await bridge.send("VKWebAppGetUserInfo");
 
+  let email = user.id;
+  let password = storage.keys[0].value;
+
+  console.log("DATA : ", email, password);
+
+  // For new users generate and
+  // save unique userId here
+  if (!password) {
+    const userUuid = uuidv4();
+    password = userUuid;
+    await bridge.send("VKWebAppStorageSet", { key: "userUuid", value: userUuid });
+  }
+
+  fauth.createUserWithEmailAndPassword(`${email}@vk.com`, password).then((e) => {
+    console.log("create user : OK");
+  }).catch((e) => {
+    console.error(e.code);
+  }).then(() => {
+    fauth.signInWithEmailAndPassword(`${email}@vk.com`, password).then((e) => {
+      console.log("login : OK");
+    }).catch((e) => {
+      console.log(e.code);
+    })
+  });
+}
+
+logIn();
 
 router.start(() => {
   ReactDOM.render(
