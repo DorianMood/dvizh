@@ -24,7 +24,6 @@ const EventCreate = () => {
 
   console.log(firebaseUser);
 
-
   let userIds = {
     firebaseId: firebaseUser.uid,
     vkId: ""
@@ -32,23 +31,25 @@ const EventCreate = () => {
 
   const database = firebase.database();
 
-  // TODO : form refs to get rid of rerendering
+  // form refs to get rid of rerendering
   const eventName = useRef();
   const eventPrice = useRef();
   const eventPicture = useRef();
   const eventDescription = useRef();
 
-  const [location, setLocation] = useState([56.83890, 60.605192]);
-  const [locationName, setLocationName] = useState('Место');
+  const [location, setLocation] = useState({
+    name: "Место",
+    coordinates: [56.83890, 60.605192]
+  });
   const [userLocation, setUserLocation] = useState([56.83890, 60.605192]);
   const [event, setEvent] = useState({
     name: "Event name",
     description: "",
     price: 0,
     location: {
-      name: locationName,
-      lng: location[0],
-      lat: location[1]
+      name: location.name,
+      lng: location.coordinates[0],
+      lat: location.coordinates[1]
     },
     date: Date.now(),
     user: userIds // TODO : set vk user id
@@ -64,29 +65,43 @@ const EventCreate = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    let GEOCODER_URL =
+      `https://geocode-maps.yandex.ru/1.x/?apikey=${
+      process.env.REACT_APP_YANDEX_KEY
+      }&geocode=${
+      [location.coordinates[1], location.coordinates[0]].join(',')
+      }&format=json`;
 
-  let GEOCODER_URL =
-    `https://geocode-maps.yandex.ru/1.x/?apikey=${
-    process.env.REACT_APP_YANDEX_KEY
-    }&geocode=${
-    [location[1], location[0]].join(',')
-    }&format=json`;
-
-  fetch(GEOCODER_URL).then(response => response.json()).then(data => {
-    setLocationName(data.response.GeoObjectCollection.featureMember[0].GeoObject.name);
-  });
+    fetch(GEOCODER_URL).then(response => response.json()).then(data => {
+      setLocation({
+        ...location,
+        name: data.response.GeoObjectCollection.featureMember[0].GeoObject.name
+      });
+    });
+  }, [location.coordinates])
 
   const submitEvent = async () => {
     database.ref(`events`).push(
       {
-        ...event, location: {
-          name: locationName,
-          lng: location[0],
-          lat: location[1]
+        ...event,
+        name: eventName.current.value,
+        price: eventPrice.current.value,
+        description: eventDescription.current.value,
+        location: {
+          name: location.name,
+          lng: location.coordinates[0],
+          lat: location.coordinates[1]
         },
         user: userIds
       }
     );
+  }
+
+  const onSubmit = () => {    
+    submitEvent().then(() => {
+      window.history.back();
+    });
   }
 
   return (
@@ -103,39 +118,29 @@ const EventCreate = () => {
 
 
       <FormLayout>
-        <FormLayoutGroup top={locationName}>
+        <FormLayoutGroup top={location.name}>
           <Div style={{ height: "150px" }}>
             <YMaps>
               <Map
-                defaultState={{ center: location, zoom: 10 }}
+                defaultState={{ center: location.coordinates, zoom: 10 }}
                 height={'150px'} width={'100%'}
-                onClick={(e) => { setLocation(e.get('coords')) }}
+                onClick={(e) => { setLocation({ ...location, coordinates: e.get('coords') }) }}
               >
                 <Placemark geometry={userLocation} options={{ preset: "islands#redCircleDotIcon" }} />
-                <Placemark geometry={location} />
+                <Placemark geometry={location.coordinates} />
               </Map>
             </YMaps>
           </Div>
         </FormLayoutGroup>
 
-
-        <Input top="Название" ref={eventName} onChange={e => setEvent({ ...event, name: e.target.value })} />
-        <File top="Загрузите фото" before={<Icon24Camera />} controlSize="l" onChange={e => setEvent({ ...event, photo: e.target.value })} >
+        <Input top="Название" getRef={eventName} />
+        <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l">
           Открыть галерею
         </File>
-        <Input top="Цена" type="number" defaultValue={0} onChange={e => setEvent({ ...event, price: e.target.value })} />
-        <Textarea top="Описание" defaultValue={0} onChange={e => setEvent({ ...event, description: e.target.value })} />
+        <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} />
+        <Textarea top="Описание" getRef={eventDescription} defaultValue={0} />
 
-        <Button size="xl"
-          onClick={() => {
-            console.log(eventName);
-            submitEvent().then(() => {
-              window.history.back();
-            });
-          }}
-        >
-          Создать
-        </Button>
+        <Button size="xl" onClick={onSubmit}>Создать</Button>
 
       </FormLayout>
     </Panel>
