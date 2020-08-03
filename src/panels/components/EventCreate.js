@@ -34,6 +34,9 @@ const EventCreate = () => {
 
   // TODO : form refs to get rid of rerendering
   const eventName = useRef();
+  const eventPrice = useRef();
+  const eventPicture = useRef();
+  const eventDescription = useRef();
 
   const [location, setLocation] = useState([56.83890, 60.605192]);
   const [locationName, setLocationName] = useState('Место');
@@ -116,7 +119,7 @@ const EventCreate = () => {
         </FormLayoutGroup>
 
 
-        <Input top="Название" onChange={e => setEvent({ ...event, name: e.target.value })} />
+        <Input top="Название" ref={eventName} onChange={e => setEvent({ ...event, name: e.target.value })} />
         <File top="Загрузите фото" before={<Icon24Camera />} controlSize="l" onChange={e => setEvent({ ...event, photo: e.target.value })} >
           Открыть галерею
         </File>
@@ -125,6 +128,7 @@ const EventCreate = () => {
 
         <Button size="xl"
           onClick={() => {
+            console.log(eventName);
             submitEvent().then(() => {
               window.history.back();
             });
