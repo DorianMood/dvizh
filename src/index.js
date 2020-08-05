@@ -9,7 +9,6 @@ import { RouterProvider } from "react-router5";
 import bridge from "@vkontakte/vk-bridge";
 
 import firebase from "firebase/app";
-import "firebase/database";
 import "firebase/auth";
 
 import { v4 as uuidv4 } from "uuid";

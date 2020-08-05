@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Panel, PanelSpinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
+import "firebase/database";
 
 import "./UserProfile.css";
 import EventCardList from "../Event/EventCardList";
@@ -33,6 +34,10 @@ const UserProfile = (props) => {
   const [fetchedEvents, setEvents] = useState([]);
   const [filter, setFilter] = useState(new Filter(0, null));
 
+
+  /*
+  Fetch VK user data and save it to state.
+  */
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
       if (type === "VKWebAppUpdateConfig") {
@@ -49,6 +54,10 @@ const UserProfile = (props) => {
     fetchData();
   }, [database]);
 
+
+  /*
+  Fetch events from firebase.
+  */
   useEffect(() => {
     function fetchEvents() {
       // Events data

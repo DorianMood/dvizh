@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
-import { between } from "geo-distance";
+import { getDistance } from "geolib";
 
 import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
@@ -50,14 +50,26 @@ const LocationEvents = (props) => {
   }, [database]);
 
   // Fetched here
-  fetchedEvents.map(event => {
+  const filteredEvents = fetchedEvents.map(event => {
     if (filter['location']) {
-      console.log('LOCATION', filter['location']);
-      console.log('EVENT', event);
-      console.log(between);
+      const distanceFromMe = getDistance(
+        { latitude: event.location.lat, longitude: event.location.lng },
+        { latitude: location[1], longitude: location[0] }
+      );
+      console.log(
+        { latitude: event.location.lat, longitude: event.location.lng },
+        { latitude: location[1], longitude: location[0] },
+        distanceFromMe
+      );
+      if (distanceFromMe <= filter.location) {
+        console.log(distanceFromMe, event);
+        return event;
+      }
     }
-    return event;
+    //return event;
   });
+
+  console.log(filteredEvents);
 
   // Display loading animation
   if (loading)
