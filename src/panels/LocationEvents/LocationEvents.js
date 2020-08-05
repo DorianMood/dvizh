@@ -52,6 +52,7 @@ const LocationEvents = (props) => {
   // Fetched here
   const filteredEvents = fetchedEvents.map(event => {
     if (filter['location']) {
+      // TODO : fix incorrect distance calculation.
       const distanceFromMe = getDistance(
         { latitude: event.location.lat, longitude: event.location.lng },
         { latitude: location[1], longitude: location[0] }
