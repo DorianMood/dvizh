@@ -7,8 +7,6 @@ import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
 import Icon56CheckCircleOutline from '@vkontakte/icons/dist/56/check_circle_outline';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
-import "@react-firebase/database";
-
 
 const Event = (props) => {
   const { route } = useRouteNode('event');
