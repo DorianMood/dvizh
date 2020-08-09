@@ -31,9 +31,7 @@ const config = {
 };
 firebase.initializeApp(config);
 
-// TODO: login or signup user here.
-
-let fauth = firebase.auth();
+// TODO : sequre api keys
 
 const logIn = async () => {
   const storage = await bridge.send("VKWebAppStorageGet", {
@@ -42,12 +40,12 @@ const logIn = async () => {
     ]
   });
   const user = await bridge.send("VKWebAppGetUserInfo");
-
+  
   let email = user.id;
   let password = storage.keys[0].value;
-
+  
   console.log("DATA : ", email, password);
-
+  
   // For new users generate and
   // save unique userId here
   if (!password) {
@@ -55,6 +53,8 @@ const logIn = async () => {
     password = userUuid;
     await bridge.send("VKWebAppStorageSet", { key: "userUuid", value: userUuid });
   }
+  
+  let fauth = firebase.auth();
 
   fauth.createUserWithEmailAndPassword(`${email}@vk.com`, password).then((e) => {
     console.log("create user : OK");

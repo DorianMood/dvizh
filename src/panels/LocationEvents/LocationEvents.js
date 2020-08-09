@@ -50,27 +50,18 @@ const LocationEvents = (props) => {
   }, [database]);
 
   // Fetched here
-  const filteredEvents = fetchedEvents.map(event => {
+  const filteredEvents = fetchedEvents.filter(event => {
     if (filter['location']) {
       // TODO : fix incorrect distance calculation.
       const distanceFromMe = getDistance(
         { latitude: event.location.lat, longitude: event.location.lng },
         { latitude: location[1], longitude: location[0] }
       );
-      console.log(
-        { latitude: event.location.lat, longitude: event.location.lng },
-        { latitude: location[1], longitude: location[0] },
-        distanceFromMe
-      );
-      if (distanceFromMe <= filter.location) {
-        console.log(distanceFromMe, event);
-        return event;
-      }
+      if (distanceFromMe <= filter.location)
+        return true;
     }
-    //return event;
+    return false;
   });
-
-  console.log(filteredEvents);
 
   // Display loading animation
   if (loading)
@@ -93,7 +84,7 @@ const LocationEvents = (props) => {
           <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
             <Placemark geometry={location} options={{ preset: "islands#redCircleDotIcon" }} />
             {
-              fetchedEvents.map((event, id) => {
+              filteredEvents.map((event, id) => {
                 const geometry = [event.location.lng, event.location.lat];
                 return (<Placemark key={id} geometry={geometry} />)
               })
@@ -102,7 +93,7 @@ const LocationEvents = (props) => {
           </Map>
         </YMaps>
       </Div>
-      <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
+      <EventCardList events={filteredEvents} filter={filter} setFilter={setFilter} />
     </Panel>
   );
 };
