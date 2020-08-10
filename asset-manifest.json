@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/dvizh/static/css/main.f3342063.chunk.css",
-    "main.js": "/dvizh/static/js/main.d011e3c8.chunk.js",
-    "main.js.map": "/dvizh/static/js/main.d011e3c8.chunk.js.map",
+    "main.js": "/dvizh/static/js/main.e2024193.chunk.js",
+    "main.js.map": "/dvizh/static/js/main.e2024193.chunk.js.map",
     "runtime-main.js": "/dvizh/static/js/runtime-main.8a85671a.js",
     "runtime-main.js.map": "/dvizh/static/js/runtime-main.8a85671a.js.map",
     "static/css/2.47f050ad.chunk.css": "/dvizh/static/css/2.47f050ad.chunk.css",
-    "static/js/2.2847ac9a.chunk.js": "/dvizh/static/js/2.2847ac9a.chunk.js",
-    "static/js/2.2847ac9a.chunk.js.map": "/dvizh/static/js/2.2847ac9a.chunk.js.map",
+    "static/js/2.e04bedba.chunk.js": "/dvizh/static/js/2.e04bedba.chunk.js",
+    "static/js/2.e04bedba.chunk.js.map": "/dvizh/static/js/2.e04bedba.chunk.js.map",
     "index.html": "/dvizh/index.html",
-    "precache-manifest.4b883ff70958232a4ba88dacfe940ce6.js": "/dvizh/precache-manifest.4b883ff70958232a4ba88dacfe940ce6.js",
+    "precache-manifest.f80d9a174cf07f4fb5a0ff1fc7620f52.js": "/dvizh/precache-manifest.f80d9a174cf07f4fb5a0ff1fc7620f52.js",
     "service-worker.js": "/dvizh/service-worker.js",
     "static/css/2.47f050ad.chunk.css.map": "/dvizh/static/css/2.47f050ad.chunk.css.map",
     "static/css/main.f3342063.chunk.css.map": "/dvizh/static/css/main.f3342063.chunk.css.map",
-    "static/js/2.2847ac9a.chunk.js.LICENSE.txt": "/dvizh/static/js/2.2847ac9a.chunk.js.LICENSE.txt"
+    "static/js/2.e04bedba.chunk.js.LICENSE.txt": "/dvizh/static/js/2.e04bedba.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8a85671a.js",
     "static/css/2.47f050ad.chunk.css",
-    "static/js/2.2847ac9a.chunk.js",
+    "static/js/2.e04bedba.chunk.js",
     "static/css/main.f3342063.chunk.css",
-    "static/js/main.d011e3c8.chunk.js"
+    "static/js/main.e2024193.chunk.js"
   ]
 }
