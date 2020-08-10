@@ -4,7 +4,8 @@ import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Grou
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
 import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
-import Icon56CheckCircleOutline from '@vkontakte/icons/dist/56/check_circle_outline';
+import Icon28CheckCircleOutline from '@vkontakte/icons/dist/28/check_circle_outline';
+import Icon24Recent from '@vkontakte/icons/dist/24/recent';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
 
@@ -33,7 +34,12 @@ const Event = (props) => {
       <PanelHeader
         left={
           <PanelHeaderButton onClick={() => { window.history.back(); }}>
-            {<Icon24Back />}
+            <Icon24Back />
+          </PanelHeaderButton>
+        }
+        right={
+          <PanelHeaderButton onClick={() => { /* TODO : show QR here. */ }}>
+            <Icon28QrCodeOutline />
           </PanelHeaderButton>
         }
       >
@@ -54,7 +60,6 @@ const Event = (props) => {
       </Group>
 
       <Group header={<Header mode="secondary">Информация</Header>}>
-        <Div>
           <div style={{
             backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg)",
             height: "200px",
@@ -75,24 +80,15 @@ const Event = (props) => {
               style={{ color: "#fff" }}
             >1337 участников</UsersStack>
           </div>
-        </Div>
-        <CardGrid>
-          <Card size="s" style={{padding: "10px"}}>
-            <Icon24MoneyCircle fill={"#3f8ae0"} />
-            {event.price}
-          </Card>
-          <Card size="s" style={{padding: "10px"}}>
-              { // Render calendar here
-                new Date(event.date).toLocaleDateString()
-              }
-          </Card>
-        </CardGrid>
-        <Div style={{ display: "flex" }}>
-          <Icon56CheckCircleOutline />
-          <Button stretched style={{ margin: "10px" }}>Пойду</Button>
 
+        <Div style={{ display: "flex" }}>
+          <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24MoneyCircle style={{ margin: "-2px 10px 0 0" }} fill={"green"} /> {event.price}</Div>
+          <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24Recent style={{ margin: "-2px 10px 0 0" }} />{new Date(event.date).toLocaleDateString()}</Div>
         </Div>
-        <Icon28QrCodeOutline />
+
+        <Div>
+          <Button stretched style={{padding: "10px"}}>Пойду</Button>
+        </Div>
       </Group>
     </Panel>
   );
