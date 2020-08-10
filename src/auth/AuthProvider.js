@@ -7,6 +7,8 @@ const AuthProvider = ({ children }) => {
   
   const [user, setUser] = useState();
 
+  console.log(user);
+
   useEffect(() => {
     const app = firebase.app();    
     app.auth().onAuthStateChanged((user) => {

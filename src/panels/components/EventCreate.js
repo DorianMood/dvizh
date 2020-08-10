@@ -25,7 +25,7 @@ const EventCreate = () => {
   console.log(firebaseUser);
 
   let userIds = {
-    firebaseId: firebaseUser.uid,
+    firebaseId: "",//firebaseUser.uid,
     vkId: ""
   };
 
@@ -87,6 +87,7 @@ const EventCreate = () => {
         ...event,
         name: eventName.current.value,
         price: eventPrice.current.value,
+        picture: "",
         description: eventDescription.current.value,
         location: {
           name: location.name,
@@ -98,7 +99,10 @@ const EventCreate = () => {
     );
   }
 
-  const onSubmit = () => {    
+  const onSubmit = () => {
+    let formData = new FormData();
+    formData.append("")
+    console.log(eventPicture.current.files[0]); return;
     submitEvent().then(() => {
       window.history.back();
     });

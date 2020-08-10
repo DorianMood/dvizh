@@ -41,6 +41,8 @@ const logIn = async () => {
   });
   const user = await bridge.send("VKWebAppGetUserInfo");
   
+  console.log("vk failed");
+
   let email = user.id;
   let password = storage.keys[0].value;
   
@@ -51,7 +53,9 @@ const logIn = async () => {
   if (!password) {
     const userUuid = uuidv4();
     password = userUuid;
-    await bridge.send("VKWebAppStorageSet", { key: "userUuid", value: userUuid });
+    await bridge
+            .send("VKWebAppStorageSet", { key: "userUuid", value: userUuid })
+            .catch(e => console.log(e));
   }
   
   let fauth = firebase.auth();
@@ -70,6 +74,8 @@ const logIn = async () => {
 }
 
 logIn();
+
+console.log("rendering index.js")
 
 router.start(() => {
   ReactDOM.render(

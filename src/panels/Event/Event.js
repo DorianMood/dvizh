@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouteNode } from "react-router5";
-import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Group, Header, UsersStack, CardGrid, Card } from "@vkontakte/vkui";
+import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Group, Header, UsersStack } from "@vkontakte/vkui";
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
 import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
-import Icon28CheckCircleOutline from '@vkontakte/icons/dist/28/check_circle_outline';
 import Icon24Recent from '@vkontakte/icons/dist/24/recent';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
