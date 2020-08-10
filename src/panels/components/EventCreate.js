@@ -19,15 +19,15 @@ import firebase from "firebase/app";
 import { AuthContext } from "../../auth/AuthProvider";
 
 const EventCreate = () => {
-
+  // TODO : fix rerendering here
   const firebaseUser = useContext(AuthContext);
 
-  console.log(firebaseUser);
+  //console.log(firebaseUser.email);//newData.child('user').child('vkId').val() + 
 
-  let userIds = {
-    firebaseId: "",//firebaseUser.uid,
-    vkId: ""
-  };
+  const [user, setUser] = useState({
+    vkId: "dorianmood",
+    photo: ""
+  });
 
   const database = firebase.database();
 
@@ -52,26 +52,21 @@ const EventCreate = () => {
       lat: location.coordinates[1]
     },
     date: Date.now(),
-    user: userIds // TODO : set vk user id
+    user: user
   });
 
   useEffect(() => {
     async function fetchData() {
       const location = await bridge.send("VKWebAppGetGeodata");
       setUserLocation([location.lat, location.long]);
-      const user = await bridge.send("VKWebAppGetUserInfo");
-      userIds.vkId = user.id;
+      const userInfo = await bridge.send("VKWebAppGetUserInfo");
+      setUser({ vkId: userInfo.id, photo: userInfo.photo_200 })
     }
     fetchData();
   }, []);
 
   useEffect(() => {
-    let GEOCODER_URL =
-      `https://geocode-maps.yandex.ru/1.x/?apikey=${
-      process.env.REACT_APP_YANDEX_KEY
-      }&geocode=${
-      [location.coordinates[1], location.coordinates[0]].join(',')
-      }&format=json`;
+    let GEOCODER_URL = `https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.REACT_APP_YANDEX_KEY}&geocode=${[location.coordinates[1], location.coordinates[0]].join(',')}&format=json`;
 
     fetch(GEOCODER_URL).then(response => response.json()).then(data => {
       setLocation({
@@ -82,6 +77,19 @@ const EventCreate = () => {
   }, [location.coordinates])
 
   const submitEvent = async () => {
+    console.log("PAYLOAD : ", {
+      ...event,
+      name: eventName.current.value,
+      price: eventPrice.current.value,
+      picture: "",
+      description: eventDescription.current.value,
+      location: {
+        name: location.name,
+        lng: location.coordinates[0],
+        lat: location.coordinates[1]
+      },
+      user: user
+    });
     database.ref(`events`).push(
       {
         ...event,
@@ -94,15 +102,14 @@ const EventCreate = () => {
           lng: location.coordinates[0],
           lat: location.coordinates[1]
         },
-        user: userIds
+        user: user
       }
     );
   }
 
   const onSubmit = () => {
-    let formData = new FormData();
-    formData.append("")
-    console.log(eventPicture.current.files[0]); return;
+    //console.log(user);
+    //return;
     submitEvent().then(() => {
       window.history.back();
     });

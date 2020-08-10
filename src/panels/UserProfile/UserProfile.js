@@ -15,8 +15,6 @@ const UserProfile = (props) => {
 
   const firebaseUser = useContext(AuthContext);
 
-  console.log(firebaseUser);
-
   // TODO : here we can render user related data first
 
   // Fetch data
