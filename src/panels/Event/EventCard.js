@@ -44,12 +44,6 @@ const ProjectCard = (props) => {
         bottomContent={
           <>
             <div>{event.description}</div>
-            <div style={{ display: "flex" }}>
-              <Button size="m" onClick={(e) => { e.stopPropagation(); console.log('click will participate') }}>Пойду</Button>
-              <Button size="m" onClick={(e) => { e.stopPropagation(); console.log('hide') }} mode="secondary" style={{ marginLeft: 8 }}>
-                Скрыть
-              </Button>
-            </div>
           </>
         }
       >
