@@ -26,7 +26,9 @@ const EventCreate = () => {
 
   const [user, setUser] = useState({
     vkId: "dorianmood",
-    photo: ""
+    photo: "",
+    firstName: "",
+    lastName: ""
   });
 
   const database = firebase.database();
@@ -36,6 +38,7 @@ const EventCreate = () => {
   const eventPrice = useRef();
   const eventPicture = useRef();
   const eventDescription = useRef();
+  const eventDate = useRef();
 
   const [location, setLocation] = useState({
     name: "Место",
@@ -60,7 +63,7 @@ const EventCreate = () => {
       const location = await bridge.send("VKWebAppGetGeodata");
       setUserLocation([location.lat, location.long]);
       const userInfo = await bridge.send("VKWebAppGetUserInfo");
-      setUser({ vkId: userInfo.id, photo: userInfo.photo_200 })
+      setUser({ vkId: userInfo.id, photo: userInfo.photo_200, firstName: userInfo.first_name, lastName: userInfo.last_name })
     }
     fetchData();
   }, []);
@@ -90,11 +93,12 @@ const EventCreate = () => {
       },
       user: user
     });
-    database.ref(`events`).push(
+    const createdEvent = database.ref(`events`).push(
       {
         ...event,
         name: eventName.current.value,
         price: eventPrice.current.value,
+        date: eventDate.current.valueAsNumber,
         picture: "",
         description: eventDescription.current.value,
         location: {
@@ -105,6 +109,7 @@ const EventCreate = () => {
         user: user
       }
     );
+    database.ref(`subscriptions/${createdEvent.key}`).set([]);
   }
 
   const onSubmit = () => {
@@ -146,7 +151,7 @@ const EventCreate = () => {
         <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l">
           Открыть галерею
         </File>
-        <Input type="date" />
+        <Input top="Дата" getRef={eventDate} type="datetime-local" />
         <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} />
         <Textarea top="Описание" getRef={eventDescription} defaultValue={0} />
 

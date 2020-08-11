@@ -11,15 +11,6 @@ const ProjectCard = (props) => {
   const { event } = props;
   const { router } = useRoute();
 
-  const SERVICE_KEY = process.env.REACT_APP_VK_API_SERVICE_KEY;
-  const VK_GET_USER = `https://api.vk.com/method/users.get?user_id=${event.user.vkId}&fields=photo_100&v=5.52&access_token=${SERVICE_KEY}`;
-
-  /*useEffect(() => {
-    fetch(VK_GET_USER)
-      .then(response => response.json())
-      .then(data => console.log(data));
-  }, []);
-*/
   return (
     <Card size="l" onClick={() => { router.navigate('event', { id: event.id, event }); console.log('card click') }}>
       <Cell
