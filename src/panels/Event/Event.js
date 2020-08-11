@@ -9,6 +9,7 @@ import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
 import bridge from "@vkontakte/vk-bridge";
 import UserSmallCard from "../components/UserSmallCard";
+import { element } from "prop-types";
 
 const Event = () => {
   const { route } = useRouteNode('event');
@@ -16,7 +17,7 @@ const Event = () => {
   const { id, event: propsEvent } = route.params;
   const [event, setEvent] = useState(propsEvent);
   const [user, setUser] = useState();
-  const [subscriptions, setSubscriptions] = useState();
+  const [subscriptions, setSubscriptions] = useState({});
 
   const database = firebase.database();
 
@@ -69,7 +70,10 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).set(subscribeUserData);
   }
 
-  console.log(subscriptions);
+  const onUnsubscribeEvent = () => {
+    database.ref(`subscriptions/${id}/${user.id}`).remove();
+  }
+
 
   return (
     <Panel id={id}>
@@ -114,21 +118,16 @@ const Event = () => {
             paddingBottom: "6px",
             borderRadius: 12
           }}>
-            <UsersStack
-              photos={[
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
-                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1"
-              ]}
-              size="m"
-              layout="vertical"
-              style={{ color: "#fff" }}
-            >1337 участников</UsersStack>
+            {
+              subscriptions ?
+              <UsersStack
+                photos={Object.keys(subscriptions).map(key => subscriptions[key].photo)}
+                size="m"
+                layout="vertical"
+                style={{ color: "#fff" }}
+              >{Object.keys(subscriptions).length} участников</UsersStack>
+              : <></>
+            }
           </div>
         </Div>
         <Div style={{ display: "flex" }}>
@@ -136,9 +135,16 @@ const Event = () => {
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24Recent style={{ margin: "-2px 10px 0 0" }} />{new Date(event.date).toLocaleString()}</Div>
         </Div>
 
-        <Div>
-          <Button stretched mode="commerce" style={{ padding: "10px" }} onClick={onSubscribeEvent}>Пойду</Button>
-        </Div>
+        {
+          user && subscriptions && Object.keys(subscriptions).indexOf(`${user.id}`) !== -1 ?
+            <Div>
+              <Button stretched mode="outline" style={{ padding: "10px" }} onClick={onUnsubscribeEvent}>Не пойду</Button>
+            </Div>
+            :
+            <Div>
+              <Button stretched mode="commerce" style={{ padding: "10px" }} onClick={onSubscribeEvent}>Пойду</Button>
+            </Div>
+        }
         { // TODO : give permission to delete only to owners.
           user && user.id === event.user.vkId ?
             <Div>

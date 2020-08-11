@@ -40,24 +40,20 @@ const logIn = async () => {
     ]
   });
   const user = await bridge.send("VKWebAppGetUserInfo");
-  
-  console.log("vk failed");
 
   let email = user.id;
   let password = storage.keys[0].value;
-  
-  console.log("DATA : ", email, password);
-  
+
   // For new users generate and
   // save unique userId here
   if (!password) {
     const userUuid = uuidv4();
     password = userUuid;
     await bridge
-            .send("VKWebAppStorageSet", { key: "userUuid", value: userUuid })
-            .catch(e => console.log(e));
+      .send("VKWebAppStorageSet", { key: "userUuid", value: userUuid })
+      .catch(e => console.log(e));
   }
-  
+
   let fauth = firebase.auth();
 
   fauth.createUserWithEmailAndPassword(`${email}@vk.com`, password).then((e) => {
@@ -75,8 +71,6 @@ const logIn = async () => {
 
 logIn();
 
-console.log("rendering index.js")
-
 router.start(() => {
   ReactDOM.render(
     <AuthProvider>
@@ -90,5 +84,5 @@ router.start(() => {
 });
 
 //if (process.env.NODE_ENV === "development") {
-  import("./eruda").then((eruda) => { }); //runtime download
+import("./eruda").then((eruda) => { }); //runtime download
 //}
