@@ -16,20 +16,24 @@ const Event = () => {
   const { id, event: propsEvent } = route.params;
   const [event, setEvent] = useState(propsEvent);
   const [user, setUser] = useState();
+  const [subscriptions, setSubscriptions] = useState();
 
   const database = firebase.database();
 
   useEffect(() => {
     if (!propsEvent) {
-      database.ref(`events/${id}`).on("value", (snapshot) => {
+      database.ref(`events/${id}`).on("value", snapshot => {
         setEvent(snapshot.val());
       });
     }
+    database.ref(`subscriptions/${id}`).on("value", snapshot => {
+      setSubscriptions(snapshot.val());
+    });
   }, [database, id, propsEvent]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = bridge.send("VKWebAppGetUserInfo");
+      const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
     fetchData();
@@ -37,7 +41,7 @@ const Event = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      
+
     }
     fetchData();
   }, []);
@@ -57,20 +61,15 @@ const Event = () => {
   }
 
   const onSubscribeEvent = () => {
-    console.log(user);
-    // TODO : implement
-    console.log("SUBSCRIBE", {
-      id: id,
-      user: {
-        vkId: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        photo: user.photo_200
-      }
-    });
+    const subscribeUserData = {
+      firstName: user.first_name,
+      lastName: user.last_name,
+      photo: user.photo_200
+    };
+    database.ref(`subscriptions/${id}/${user.id}`).set(subscribeUserData);
   }
 
-  console.log(user);
+  console.log(subscriptions);
 
   return (
     <Panel id={id}>
@@ -117,6 +116,11 @@ const Event = () => {
           }}>
             <UsersStack
               photos={[
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
+                "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
                 "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
                 "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1",
                 "https://sun9-12.userapi.com/c851016/v851016587/119cab/ai0uN_RKSXc.jpg?ava=1"

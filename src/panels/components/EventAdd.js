@@ -3,7 +3,6 @@ import Icon28AddOutline from "@vkontakte/icons/dist/28/add_outline";
 import { Avatar } from "@vkontakte/vkui";
 import { useRoute } from "react-router5";
 
-
 const EventAdd = () => {
 
   const { router } = useRoute();
