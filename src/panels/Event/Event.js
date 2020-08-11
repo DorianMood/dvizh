@@ -28,6 +28,18 @@ const Event = (props) => {
     return <Spinner size="large" />
   }
 
+  const onDeleteEvent = () => {
+    database.ref(`events/${id}`).remove().then(() => {
+      console.log("removed");
+      window.history.back();
+    })
+  }
+
+  const onSubscribeEvent = () => {
+    // TODO : implement
+    console.log("SUBSCRIBE");
+  }
+
   return (
     <Panel id={id}>
       <PanelHeader
@@ -86,8 +98,13 @@ const Event = (props) => {
         </Div>
 
         <Div>
-          <Button stretched style={{padding: "10px"}}>Пойду</Button>
+          <Button stretched mode="commerce" style={{padding: "10px"}} onClick={onSubscribeEvent}>Пойду</Button>
         </Div>
+        { // TODO : give permission to delete only to owners.
+        <Div>
+          <Button stretched mode="destructive" style={{padding: "10px"}} onClick={onDeleteEvent}>Удалить</Button>
+        </Div>
+        }
       </Group>
     </Panel>
   );

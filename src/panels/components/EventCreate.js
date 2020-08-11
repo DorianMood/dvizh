@@ -108,8 +108,6 @@ const EventCreate = () => {
   }
 
   const onSubmit = () => {
-    //console.log(user);
-    //return;
     submitEvent().then(() => {
       window.history.back();
     });
@@ -148,6 +146,7 @@ const EventCreate = () => {
         <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l">
           Открыть галерею
         </File>
+        <Input type="date" />
         <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} />
         <Textarea top="Описание" getRef={eventDescription} defaultValue={0} />
 

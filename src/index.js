@@ -89,6 +89,6 @@ router.start(() => {
   );
 });
 
-if (process.env.NODE_ENV === "development") {
+//if (process.env.NODE_ENV === "development") {
   import("./eruda").then((eruda) => { }); //runtime download
-}
+//}
