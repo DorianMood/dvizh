@@ -9,6 +9,7 @@ import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
 import bridge from "@vkontakte/vk-bridge";
 import UserSmallCard from "../components/UserSmallCard";
+import Rating from "../components/Rating";
 import { element } from "prop-types";
 
 const Event = () => {
@@ -74,6 +75,9 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
 
+  const currentUserSubscription = !user ? null : subscriptions[user.id];
+
+  const rated = currentUserSubscription && currentUserSubscription.rating;
 
   return (
     <Panel id={id}>
@@ -91,6 +95,11 @@ const Event = () => {
       >
         <h5>{event.name}</h5>
       </PanelHeader>
+
+      {
+        <Rating eventId={id} />
+      }
+
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps>
           <Map defaultState={{ center: [event.location.lng, event.location.lat], zoom: 10 }} width={'100%'}>
@@ -120,13 +129,13 @@ const Event = () => {
           }}>
             {
               subscriptions ?
-              <UsersStack
-                photos={Object.keys(subscriptions).map(key => subscriptions[key].photo)}
-                size="m"
-                layout="vertical"
-                style={{ color: "#fff" }}
-              >{Object.keys(subscriptions).length} участников</UsersStack>
-              : <></>
+                <UsersStack
+                  photos={Object.keys(subscriptions).map(key => subscriptions[key].photo)}
+                  size="m"
+                  layout="vertical"
+                  style={{ color: "#fff" }}
+                >{Object.keys(subscriptions).length} участников</UsersStack>
+                : <></>
             }
           </div>
         </Div>
@@ -136,14 +145,15 @@ const Event = () => {
         </Div>
 
         {
-          user && subscriptions && Object.keys(subscriptions).indexOf(`${user.id}`) !== -1 ?
-            <Div>
-              <Button stretched mode="outline" style={{ padding: "10px" }} onClick={onUnsubscribeEvent}>Не пойду</Button>
-            </Div>
-            :
-            <Div>
-              <Button stretched mode="commerce" style={{ padding: "10px" }} onClick={onSubscribeEvent}>Пойду</Button>
-            </Div>
+          user && event.user.vkId === user.id ? <></> :
+            user && subscriptions && Object.keys(subscriptions).indexOf(`${user.id}`) !== -1 ?
+              <Div>
+                <Button stretched mode="outline" style={{ padding: "10px" }} onClick={onUnsubscribeEvent}>Не пойду</Button>
+              </Div>
+              :
+              <Div>
+                <Button stretched mode="commerce" style={{ padding: "10px" }} onClick={onSubscribeEvent}>Пойду</Button>
+              </Div>
         }
         { // TODO : give permission to delete only to owners.
           user && user.id === event.user.vkId ?

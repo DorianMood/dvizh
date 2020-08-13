@@ -21,17 +21,9 @@ const UserProfile = (props) => {
   const database = firebase.database();
   const [loading, setLoading] = useState(true);
 
-  const rating = [
-    { key: "😊", value: 101 },
-    { key: "😴", value: 11 },
-    { key: "😍", value: 35 },
-    { key: "🤬", value: 4 },
-  ];
-
   const [fetchedUser, setUser] = useState(null);
   const [fetchedEvents, setEvents] = useState([]);
   const [filter, setFilter] = useState(new Filter(0, null));
-
 
   /*
   Fetch VK user data and save it to state.
@@ -88,7 +80,7 @@ const UserProfile = (props) => {
 
   return (
     <Panel>
-      <UserHeader user={fetchedUser} rating={rating} />
+      <UserHeader user={fetchedUser} />
       <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
       <EventAdd />
     </Panel>

@@ -109,7 +109,11 @@ const EventCreate = () => {
         user: user
       }
     );
-    database.ref(`subscriptions/${createdEvent.key}`).set({x:1}).then(() => console.log("SUBSCRIBTION CREATED"));
+    database.ref(`subscriptions/${createdEvent.key}`).set({
+        firstName: user.first_name,
+        lastName: user.last_name,
+        photo: user.photo_200
+      }).then(() => console.log("SUBSCRIBTION CREATED"));
   }
 
   const onSubmit = () => {

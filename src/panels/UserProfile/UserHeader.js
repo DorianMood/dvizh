@@ -1,14 +1,15 @@
 import React from "react";
-import { Avatar, RichCell, Div, Title } from "@vkontakte/vkui";
+import { Avatar, RichCell, Title } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 
 import Icon24User from "@vkontakte/icons/dist/24/user";
 
+import Rating from "../components/Rating";
 import "./UserProfile.css";
 
 const UserHeader = (props) => {
 
-  const { rating, user } = props;
+  const { user } = props;
   const userName = "Никита Долгошеин";
 
   console.log("User : ", user);
@@ -27,14 +28,7 @@ const UserHeader = (props) => {
         </Avatar>
       }
       text={
-        <Div className="user-profile-satisfied">
-          {rating.map((item, key) => (
-            <Div className="user-profile-satisfied-col" key={key}>
-              <Title level="2">{item.key}</Title>
-              <Title level="3">{item.value}</Title>
-            </Div>
-          ))}
-        </Div>
+        <Rating />
       }
     >
       <Title level="2" weight="regular">
