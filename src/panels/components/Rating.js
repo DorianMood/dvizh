@@ -36,10 +36,7 @@ const Rating = (props) => {
   }, []);
 
   const onRate = (key) => {
-    console.log(rating);
-    console.log(rating.map(item => {
-      return { key: item.key, ids: item.ids }
-    }));
+    // TODO : create rating if hasn't rate otherwise
 
     database.ref(`rating/${eventId}`).set(
       ratingData.map(item => {
@@ -51,8 +48,6 @@ const Rating = (props) => {
   if (eventId) {
     console.log("event");
   }
-
-  console.log("RATING", rating == true);
 
   return (
     <Div style={{ display: "flex" }}>
