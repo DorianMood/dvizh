@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Panel, PanelSpinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
@@ -9,11 +9,8 @@ import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
 import EventAdd from "../components/EventAdd";
 import Filter from "../../utils/Filter";
-import { AuthContext } from "../../auth/AuthProvider";
 
 const UserProfile = (props) => {
-
-  const firebaseUser = useContext(AuthContext);
 
   // TODO : here we can render user related data first
 

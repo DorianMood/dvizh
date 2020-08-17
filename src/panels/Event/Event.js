@@ -10,7 +10,6 @@ import firebase from "firebase";
 import bridge from "@vkontakte/vk-bridge";
 import UserSmallCard from "../components/UserSmallCard";
 import Rating from "../components/Rating";
-import { element } from "prop-types";
 
 const Event = () => {
   const { route } = useRouteNode('event');
@@ -37,13 +36,6 @@ const Event = () => {
     const fetchData = async () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-
     }
     fetchData();
   }, []);
@@ -75,10 +67,6 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
 
-  const currentUserSubscription = !user ? null : subscriptions[user.id];
-
-  const rated = currentUserSubscription && currentUserSubscription.rating;
-
   return (
     <Panel id={id}>
       <PanelHeader
@@ -97,7 +85,7 @@ const Event = () => {
       </PanelHeader>
 
       {
-        <Rating eventId={id} />
+        <Rating eventId={id} userId={user.id} />
       }
 
       <Div style={{ height: "240px", padding: 0 }}>

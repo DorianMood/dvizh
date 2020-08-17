@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Panel,
   PanelHeader,
@@ -16,13 +16,9 @@ import Icon24Camera from "@vkontakte/icons/dist/24/camera";
 import { YMaps, Placemark, Map } from "react-yandex-maps";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
-import { AuthContext } from "../../auth/AuthProvider";
 
 const EventCreate = () => {
   // TODO : fix rerendering here
-  const firebaseUser = useContext(AuthContext);
-
-  //console.log(firebaseUser.email);//newData.child('user').child('vkId').val() + 
 
   const [user, setUser] = useState({
     vkId: "dorianmood",
@@ -45,18 +41,6 @@ const EventCreate = () => {
     coordinates: [56.83890, 60.605192]
   });
   const [userLocation, setUserLocation] = useState([56.83890, 60.605192]);
-  const [event, setEvent] = useState({
-    name: "Event name",
-    description: "",
-    price: 0,
-    location: {
-      name: location.name,
-      lng: location.coordinates[0],
-      lat: location.coordinates[1]
-    },
-    date: Date.now(),
-    user: user
-  });
 
   useEffect(() => {
     async function fetchData() {
@@ -69,7 +53,7 @@ const EventCreate = () => {
   }, []);
 
   useEffect(() => {
-    let GEOCODER_URL = `https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.REACT_APP_YANDEX_KEY}&geocode=${[location.coordinates[1], location.coordinates[0]].join(',')}&format=json`;
+    const GEOCODER_URL = `https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.REACT_APP_YANDEX_KEY}&geocode=${[location.coordinates[1], location.coordinates[0]].join(',')}&format=json`;
 
     fetch(GEOCODER_URL).then(response => response.json()).then(data => {
       setLocation({
@@ -77,25 +61,13 @@ const EventCreate = () => {
         name: data.response.GeoObjectCollection.featureMember[0].GeoObject.name
       });
     });
-  }, [location.coordinates])
+  }, [location.coordinates]);
 
   const submitEvent = async () => {
-    console.log("PAYLOAD : ", {
-      ...event,
-      name: eventName.current.value,
-      price: eventPrice.current.value,
-      picture: "",
-      description: eventDescription.current.value,
-      location: {
-        name: location.name,
-        lng: location.coordinates[0],
-        lat: location.coordinates[1]
-      },
-      user: user
-    });
+
+    // Create event
     const createdEvent = database.ref(`events`).push(
       {
-        ...event,
         name: eventName.current.value,
         price: eventPrice.current.value,
         date: eventDate.current.valueAsNumber,
@@ -109,6 +81,7 @@ const EventCreate = () => {
         user: user
       }
     );
+    // Subscribe
     database.ref(`subscriptions/${createdEvent.key}`).set({
         firstName: user.first_name,
         lastName: user.last_name,

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Card, Cell, Button, Avatar } from "@vkontakte/vkui";
+import { Card, Cell, Avatar } from "@vkontakte/vkui";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 import Icon16Place from "@vkontakte/icons/dist/16/place";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";

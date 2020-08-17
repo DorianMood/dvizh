@@ -7,6 +7,15 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState();
+  //const [vkUser, setVkUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await bridge.send("VKWebAppGetUserInfo");
+      console.log("USER AUTH : ", user);
+    }
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const app = firebase.app();
