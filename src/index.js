@@ -31,7 +31,7 @@ const config = {
 };
 firebase.initializeApp(config);
 
-// TODO : sequre api keys
+// TODO : secure api keys
 
 const logIn = async () => {
   const storage = await bridge.send("VKWebAppStorageGet", {

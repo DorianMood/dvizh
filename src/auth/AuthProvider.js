@@ -4,15 +4,22 @@ import bridge from "@vkontakte/vk-bridge";
 
 export const AuthContext = createContext();
 
+const defaultUser = {
+  id: "dorianmood",
+  
+}
+
 const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState();
-  //const [vkUser, setVkUser] = useState();
+  const [vkUser, setVkUser] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
       console.log("USER AUTH : ", user);
+
+      setVkUser(user);
     }
     fetchUser();
   }, []);
@@ -23,6 +30,8 @@ const AuthProvider = ({ children }) => {
       setUser(user);
     })
   }, []);
+
+  console.log("USER AUTH : ", vkUser);
 
   return (
     <AuthContext.Provider value={user}>

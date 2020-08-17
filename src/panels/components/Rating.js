@@ -5,6 +5,14 @@ import {
 } from "@vkontakte/vkui";
 import firebase from "firebase";
 import "firebase/database";
+import { element } from "prop-types";
+
+export const initialRating = [
+  { key: "😊", value: [] },
+  { key: "😴", value: [] },
+  { key: "😍", value: [] },
+  { key: "🤬", value: [] },
+];
 
 const Rating = (props) => {
 
@@ -13,14 +21,8 @@ const Rating = (props) => {
 
   const database = firebase.database();
 
-  const initialRating = [
-    { key: "😊", value: [] },
-    { key: "😴", value: [] },
-    { key: "😍", value: [] },
-    { key: "🤬", value: [] },
-  ];
 
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,30 +31,27 @@ const Rating = (props) => {
         const ratingData = fetchedValue ? fetchedValue.map(item => {
           return {
             key: item.key,
-            value: Array.isArray(item.ids) ? item.ids.length : 0,
-            set: Array.isArray(item.ids) && item.ids.indexOf(userId) !== -1
+            value: item.ids ? Object.values(item.ids).length : 0
           };
         }) : initialRating;
         setRating(ratingData);
       });
     };
     fetchData();
-  }, [database, eventId, initialRating, userId]);
+  }, [database]);
 
   const onRate = (key) => {
-    // TODO : create rating if hasn't rate otherwise
-
-    console.log(rating);
-
-    database.ref(`rating/${eventId}`).set(
-      initialRating.map(item => {
-        return { key: item.key, ids: [1, 2] };
-      })
-    );
+    rating.forEach((element, index) => {
+      if (element.key === key) {
+        database.ref(`rating/${eventId}/${index}/ids/${userId}`).set(true);
+      } else {
+        database.ref(`rating/${eventId}/${index}/ids/${userId}`).remove();
+      }
+    });
   }
 
   if (eventId) {
-    console.log("event");
+    console.log("user id : ", userId);
   }
 
   return (
@@ -65,9 +64,6 @@ const Rating = (props) => {
       ))}
     </Div>
   )
-};
-
-Rating.propTypes = {
 };
 
 export default Rating;

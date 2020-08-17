@@ -67,6 +67,8 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
 
+  console.log(user);
+
   return (
     <Panel id={id}>
       <PanelHeader
@@ -85,7 +87,7 @@ const Event = () => {
       </PanelHeader>
 
       {
-        <Rating eventId={id} userId={user.id} />
+        <Rating eventId={id} userId={user ? user.id : 3} />
       }
 
       <Div style={{ height: "240px", padding: 0 }}>

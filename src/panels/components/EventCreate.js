@@ -17,6 +17,8 @@ import { YMaps, Placemark, Map } from "react-yandex-maps";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
 
+import { initialRating } from "../components/Rating";
+
 const EventCreate = () => {
   // TODO : fix rerendering here
 
@@ -87,6 +89,7 @@ const EventCreate = () => {
         lastName: user.last_name,
         photo: user.photo_200
       }).then(() => console.log("SUBSCRIBTION CREATED"));
+    // TODO : push rating here
   }
 
   const onSubmit = () => {
