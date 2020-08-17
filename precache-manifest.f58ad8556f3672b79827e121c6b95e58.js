@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "48e958b4fc66aa2600ff08ac465208ec",
+    "revision": "789d5ae5a8bf45e32695a4fb41aa76bd",
     "url": "/dvizh/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dvizh/static/css/2.47f050ad.chunk.css"
   },
   {
-    "revision": "9e00a3998d05c2f82cb7",
+    "revision": "b9a64c57f744d966816a",
     "url": "/dvizh/static/css/main.f3342063.chunk.css"
   },
   {
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dvizh/static/js/4.ec536608.chunk.js"
   },
   {
-    "revision": "9e00a3998d05c2f82cb7",
-    "url": "/dvizh/static/js/main.929cd934.chunk.js"
+    "revision": "b9a64c57f744d966816a",
+    "url": "/dvizh/static/js/main.cf16fe7e.chunk.js"
   },
   {
     "revision": "34f125207e7883cd277c",
