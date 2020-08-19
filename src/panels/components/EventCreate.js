@@ -66,7 +66,6 @@ const EventCreate = () => {
   }, [location.coordinates]);
 
   const submitEvent = async () => {
-
     // Create event
     const createdEvent = database.ref(`events`).push(
       {
@@ -85,11 +84,14 @@ const EventCreate = () => {
     );
     // Subscribe
     database.ref(`subscriptions/${createdEvent.key}`).set({
-        firstName: user.first_name,
-        lastName: user.last_name,
-        photo: user.photo_200
-      }).then(() => console.log("SUBSCRIBTION CREATED"));
-    // TODO : push rating here
+      firstName: user.first_name,
+      lastName: user.last_name,
+      photo: user.photo_200
+    }).then(() => console.log("SUBSCRIBTION CREATED"));
+    // Create rating
+    database.ref(`rating/${createdEvent.key}`).set(
+      initialRating.map(item => item.key)
+    );
   }
 
   const onSubmit = () => {

@@ -5,7 +5,6 @@ import {
 } from "@vkontakte/vkui";
 import firebase from "firebase";
 import "firebase/database";
-import { element } from "prop-types";
 
 export const initialRating = [
   { key: "😊", value: [] },
@@ -17,10 +16,8 @@ export const initialRating = [
 const Rating = (props) => {
 
   const { eventId, userId } = props;
-  //const userId = 3;
 
   const database = firebase.database();
-
 
   const [rating, setRating] = useState([]);
 
@@ -50,8 +47,12 @@ const Rating = (props) => {
     });
   }
 
-  if (eventId) {
-    console.log("user id : ", userId);
+  if (!eventId) {
+    // User profile rating
+    database.ref(`events`).orderByChild('user/vkId').equalTo(98918936).on("value", snapshoot => {
+      console.log(Object.keys(snapshoot.val()));
+    });
+    return <></>;
   }
 
   return (
