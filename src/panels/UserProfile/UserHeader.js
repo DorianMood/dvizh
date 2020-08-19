@@ -27,8 +27,7 @@ const UserHeader = (props) => {
           {user === null ? <Icon24User /> : null}
         </Avatar>
       }
-      text={
-        <Rating />
+      text={ "Rating here soon"
       }
     >
       <Title level="2" weight="regular">

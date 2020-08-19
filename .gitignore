@@ -18,3 +18,4 @@ package-lock.json
 .idea
 
 .env
+src/firebase.conf

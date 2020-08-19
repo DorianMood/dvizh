@@ -25,8 +25,8 @@ const EventCreate = () => {
   const [user, setUser] = useState({
     vkId: "dorianmood",
     photo: "",
-    firstName: "",
-    lastName: ""
+    firstName: "Developer",
+    lastName: "Developer"
   });
 
   const database = firebase.database();
@@ -82,16 +82,17 @@ const EventCreate = () => {
         user: user
       }
     );
+    // TODO : need fix here. something goes wrong.
     // Subscribe
     database.ref(`subscriptions/${createdEvent.key}`).set({
-      firstName: user.first_name,
-      lastName: user.last_name,
-      photo: user.photo_200
+      firstName: user.firstName,
+      lastName: user.lastName,
+      photo: user.photo
     }).then(() => console.log("SUBSCRIBTION CREATED"));
     // Create rating
     database.ref(`rating/${createdEvent.key}`).set(
-      initialRating.map(item => item.key)
-    );
+      initialRating.map(item => { return { key: item.key } })
+    ).then(() => console.log("RATING CREATED"));
   }
 
   const onSubmit = () => {

@@ -9,6 +9,8 @@ import {
   ModalPage,
   ModalPageHeader,
   Title,
+  Spinner,
+  Button,
 } from "@vkontakte/vkui";
 
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
@@ -22,13 +24,12 @@ const ProjectCardList = (props) => {
   const { events, filter, setFilter } = props;
   const [currentModal, setCurrentModal] = useState(null);
   const [innerFilter, setInnerFilter] = useState(filter);
-  
-  
+
   useEffect(() => {
     setInnerFilter(filter);
   }, [filter]);
-  
-  
+
+
   const updateFilter = (data) => {
     const { key, value } = data;
     setInnerFilter({
@@ -36,32 +37,32 @@ const ProjectCardList = (props) => {
       [key]: value
     })
   }
-  
+
   let filteredEvents = events.filter((element) => {
     return element;
   });
-  
+
   const filterModal = (
     <ModalRoot
-    activeModal={currentModal}
-    onClose={() => {
-      setCurrentModal(null);
-      setFilter(innerFilter);
-      filteredEvents = events.filter((element) => {
-        return element;
-      });
-    }}
+      activeModal={currentModal}
+      onClose={() => {
+        setCurrentModal(null);
+        setFilter(innerFilter);
+        filteredEvents = events.filter((element) => {
+          return element;
+        });
+      }}
     >
       <ModalPage
         id={MAIN_MODAL}
         header={<ModalPageHeader><Title level="2">Фильтры</Title></ModalPageHeader>}
         dynamicContentHeight
-        >
+      >
         <FilterPanel filterValues={innerFilter} onUpdate={updateFilter} />
       </ModalPage>
     </ModalRoot>
   );
-  
+
   return (
     <View modal={filterModal}>
       <Group

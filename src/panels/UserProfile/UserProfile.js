@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Panel, PanelSpinner } from "@vkontakte/vkui";
+import { Panel, PanelSpinner, Spinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -9,6 +9,7 @@ import EventCardList from "../Event/EventCardList";
 import UserHeader from "./UserHeader";
 import EventAdd from "../components/EventAdd";
 import Filter from "../../utils/Filter";
+import InfiniteScroll from 'react-infinite-scroller';
 
 const UserProfile = (props) => {
 
@@ -26,59 +27,47 @@ const UserProfile = (props) => {
   Fetch VK user data and save it to state.
   */
   useEffect(() => {
-    bridge.subscribe(({ detail: { type, data } }) => {
-      if (type === "VKWebAppUpdateConfig") {
-        const schemeAttribute = document.createAttribute("scheme");
-        schemeAttribute.value = data.scheme ? data.scheme : "client_light";
-        document.body.attributes.setNamedItem(schemeAttribute);
-      }
-    });
     async function fetchData() {
-      // User data
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
     fetchData();
   }, [database]);
 
-
   /*
   Fetch events from firebase.
   */
-  useEffect(() => {
-    function fetchEvents() {
-      // Events data
-      database.ref("events").on("value", dataSnapshot => {
-        const events = Object.entries(dataSnapshot.val()).map(e => {
-          return { id: e[0], ...e[1] };
-        });
-        setEvents(events);
-        setLoading(false);
-      });
+  // TODO : make it work with filter
+  // may be it is better just to move all the logic inside EventList component
+  const nextPage = () => {
+    let last = fetchedEvents[fetchedEvents.length - 1];
+    let query = database.ref("events").orderByKey();
+    if (fetchedEvents.length > 0) {
+      query = query.startAt(last.id);
     }
-    fetchEvents();
-  }, [database]);
+    query.limitToFirst(3).on("value", dataSnapshot => {
+      let events = dataSnapshot.val() ? Object.entries(dataSnapshot.val()).map(e => {
+        return { id: e[0], ...e[1] };
+      }) : []; if (fetchedEvents.length > 0) events.splice(0, 1);
+      //console.log("next page : ", events);
+      if (events.length > 0) {
+        setEvents([...fetchedEvents, ...events]);
+      } else if (loading) {
+        setLoading(false);
+      }
+    });
+  }
 
-  // Display loading animation
-  if (loading)
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          height: "100%"
-        }}
-      >
-        <PanelSpinner size="large" />
-      </div>
-    );
+  useEffect(() => {
+    nextPage();
+  }, [database]);
 
   return (
     <Panel>
       <UserHeader user={fetchedUser} />
-      <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
+      <InfiniteScroll pageStart={0} threshold={0} loadMore={nextPage} hasMore={loading} loader={<Spinner key={0} />}>
+        <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
+      </InfiniteScroll>
       <EventAdd />
     </Panel>
   );

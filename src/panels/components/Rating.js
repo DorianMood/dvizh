@@ -49,8 +49,8 @@ const Rating = (props) => {
 
   if (!eventId) {
     // User profile rating
-    database.ref(`events`).orderByChild('user/vkId').equalTo(98918936).on("value", snapshoot => {
-      console.log(Object.keys(snapshoot.val()));
+    database.ref(`events`).orderByChild('user/vkId').equalTo(userId ?? 0).on("value", snapshoot => {
+      console.log(snapshoot.val() ? Object.keys(snapshoot.val()) : `NO EVENTS FOR ${userId}`);
     });
     return <></>;
   }
