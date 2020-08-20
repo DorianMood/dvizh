@@ -36,7 +36,11 @@ const EventCreate = () => {
   const eventPrice = useRef();
   const eventPicture = useRef();
   const eventDescription = useRef();
-  const eventDate = useRef();
+
+  let dateNow = new Date();
+  let defaultDate = dateNow.toISOString().split(".")[0];//`${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}T00:00`;
+  console.log(defaultDate);
+  const eventDate = useRef(defaultDate);
 
   const [location, setLocation] = useState({
     name: "Место",
@@ -134,11 +138,11 @@ const EventCreate = () => {
         <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l">
           Открыть галерею
         </File>
-        <Input top="Дата" getRef={eventDate} type="datetime-local" />
+        <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" required />
         <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} />
         <Textarea top="Описание" getRef={eventDescription} defaultValue={0} />
 
-        <Button size="xl" onClick={onSubmit}>Создать</Button>
+        <Button type="submit" size="xl" onClick={onSubmit}>Создать</Button>
 
       </FormLayout>
     </Panel>

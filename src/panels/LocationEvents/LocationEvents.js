@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { renderToString } from "react-dom/server";
 import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
@@ -7,10 +8,13 @@ import { getDistance } from "geolib";
 import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
+import EventCard from "../Event/EventCard";
 import Filter from "../../utils/Filter";
 import InfiniteScroll from "react-infinite-scroller";
-
+import { useRoute } from "react-router5";
 const LocationEvents = (props) => {
+
+  const router = useRoute();
 
   // Fetch data
   const database = firebase.database();
@@ -72,11 +76,20 @@ const LocationEvents = (props) => {
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps >
           <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
-            <Placemark geometry={location} options={{ preset: "islands#redCircleDotIcon" }} />
+            <Placemark
+              geometry={location}
+              options={{ preset: "islands#redCircleDotIcon" }}
+              properties={{ hintContent: "this is hint", balloonContent: "this is balloon" }}
+              modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+            />
             {
               filteredEvents.map((event, id) => {
                 const geometry = [event.location.lat, event.location.lng];
-                return (<Placemark key={id} geometry={geometry} />)
+                return (
+                  <Placemark
+                    key={id} geometry={geometry} modules={['geoObject.addon.balloon']}
+                properties={{ balloonContent: renderToString(<a href={`#/event/${event.id}`}>{event.name}</a>) }}
+                  />)
               })
             }
             <Circle geometry={[location, filter['location'] /*metrs*/]} />
