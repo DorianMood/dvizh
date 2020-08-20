@@ -49,7 +49,6 @@ const UserProfile = (props) => {
       let events = dataSnapshot.val() ? Object.entries(dataSnapshot.val()).map(e => {
         return { id: e[0], ...e[1] };
       }) : []; if (fetchedEvents.length > 0) events.splice(0, 1);
-      //console.log("next page : ", events);
       if (events.length > 0) {
         setEvents([...fetchedEvents, ...events]);
       } else if (loading) {
@@ -65,7 +64,7 @@ const UserProfile = (props) => {
   return (
     <Panel>
       <UserHeader user={fetchedUser} />
-      <InfiniteScroll pageStart={0} threshold={0} loadMore={nextPage} hasMore={loading} loader={<Spinner key={0} />}>
+      <InfiniteScroll threshold={0} loadMore={nextPage} hasMore={loading} loader={<Spinner key={0} />}>
         <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
       </InfiniteScroll>
       <EventAdd />
