@@ -1,30 +1,30 @@
 {
   "files": {
     "main.css": "/dvizh/static/css/main.f3342063.chunk.css",
-    "main.js": "/dvizh/static/js/main.baf5e191.chunk.js",
-    "main.js.map": "/dvizh/static/js/main.baf5e191.chunk.js.map",
-    "runtime-main.js": "/dvizh/static/js/runtime-main.c8206700.js",
-    "runtime-main.js.map": "/dvizh/static/js/runtime-main.c8206700.js.map",
+    "main.js": "/dvizh/static/js/main.aad31a11.chunk.js",
+    "main.js.map": "/dvizh/static/js/main.aad31a11.chunk.js.map",
+    "runtime-main.js": "/dvizh/static/js/runtime-main.811def30.js",
+    "runtime-main.js.map": "/dvizh/static/js/runtime-main.811def30.js.map",
     "static/css/2.47f050ad.chunk.css": "/dvizh/static/css/2.47f050ad.chunk.css",
-    "static/js/2.258fe2ff.chunk.js": "/dvizh/static/js/2.258fe2ff.chunk.js",
-    "static/js/2.258fe2ff.chunk.js.map": "/dvizh/static/js/2.258fe2ff.chunk.js.map",
-    "static/js/3.a5e813ef.chunk.js": "/dvizh/static/js/3.a5e813ef.chunk.js",
-    "static/js/3.a5e813ef.chunk.js.map": "/dvizh/static/js/3.a5e813ef.chunk.js.map",
-    "static/js/4.ca0155df.chunk.js": "/dvizh/static/js/4.ca0155df.chunk.js",
-    "static/js/4.ca0155df.chunk.js.map": "/dvizh/static/js/4.ca0155df.chunk.js.map",
+    "static/js/2.65b89ebf.chunk.js": "/dvizh/static/js/2.65b89ebf.chunk.js",
+    "static/js/2.65b89ebf.chunk.js.map": "/dvizh/static/js/2.65b89ebf.chunk.js.map",
+    "static/js/3.6677519c.chunk.js": "/dvizh/static/js/3.6677519c.chunk.js",
+    "static/js/3.6677519c.chunk.js.map": "/dvizh/static/js/3.6677519c.chunk.js.map",
+    "static/js/4.e74a4d79.chunk.js": "/dvizh/static/js/4.e74a4d79.chunk.js",
+    "static/js/4.e74a4d79.chunk.js.map": "/dvizh/static/js/4.e74a4d79.chunk.js.map",
     "index.html": "/dvizh/index.html",
-    "precache-manifest.332bc173858cc5605d89705e6dbd76b1.js": "/dvizh/precache-manifest.332bc173858cc5605d89705e6dbd76b1.js",
+    "precache-manifest.5a3e1096faaf7f3528864791e31a3a43.js": "/dvizh/precache-manifest.5a3e1096faaf7f3528864791e31a3a43.js",
     "service-worker.js": "/dvizh/service-worker.js",
     "static/css/2.47f050ad.chunk.css.map": "/dvizh/static/css/2.47f050ad.chunk.css.map",
     "static/css/main.f3342063.chunk.css.map": "/dvizh/static/css/main.f3342063.chunk.css.map",
-    "static/js/2.258fe2ff.chunk.js.LICENSE.txt": "/dvizh/static/js/2.258fe2ff.chunk.js.LICENSE.txt",
-    "static/js/3.a5e813ef.chunk.js.LICENSE.txt": "/dvizh/static/js/3.a5e813ef.chunk.js.LICENSE.txt"
+    "static/js/2.65b89ebf.chunk.js.LICENSE.txt": "/dvizh/static/js/2.65b89ebf.chunk.js.LICENSE.txt",
+    "static/js/3.6677519c.chunk.js.LICENSE.txt": "/dvizh/static/js/3.6677519c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c8206700.js",
+    "static/js/runtime-main.811def30.js",
     "static/css/2.47f050ad.chunk.css",
-    "static/js/2.258fe2ff.chunk.js",
+    "static/js/2.65b89ebf.chunk.js",
     "static/css/main.f3342063.chunk.css",
-    "static/js/main.baf5e191.chunk.js"
+    "static/js/main.aad31a11.chunk.js"
   ]
 }
