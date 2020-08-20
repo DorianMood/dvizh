@@ -8,6 +8,7 @@ import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
 import Filter from "../../utils/Filter";
+import InfiniteScroll from "react-infinite-scroller";
 
 const LocationEvents = (props) => {
 
@@ -49,13 +50,12 @@ const LocationEvents = (props) => {
     fetchEvents();
   }, [database]);
 
-  // Fetched here
+  // Filter fetched events
   const filteredEvents = fetchedEvents.filter(event => {
     if (filter['location']) {
-      // TODO : fix incorrect distance calculation.
       const distanceFromMe = getDistance(
         { latitude: event.location.lat, longitude: event.location.lng },
-        { latitude: location[1], longitude: location[0] }
+        { latitude: location[0], longitude: location[1] }
       );
       if (distanceFromMe <= filter.location)
         return true;
@@ -85,7 +85,7 @@ const LocationEvents = (props) => {
             <Placemark geometry={location} options={{ preset: "islands#redCircleDotIcon" }} />
             {
               filteredEvents.map((event, id) => {
-                const geometry = [event.location.lng, event.location.lat];
+                const geometry = [event.location.lat, event.location.lng];
                 return (<Placemark key={id} geometry={geometry} />)
               })
             }
@@ -93,7 +93,9 @@ const LocationEvents = (props) => {
           </Map>
         </YMaps>
       </Div>
-      <EventCardList events={filteredEvents} filter={filter} setFilter={setFilter} />
+      <InfiniteScroll>
+        <EventCardList events={filteredEvents} filter={filter} setFilter={setFilter} />
+      </InfiniteScroll>
     </Panel>
   );
 };

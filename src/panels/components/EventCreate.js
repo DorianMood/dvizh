@@ -76,8 +76,8 @@ const EventCreate = () => {
         description: eventDescription.current.value,
         location: {
           name: location.name,
-          lng: location.coordinates[0],
-          lat: location.coordinates[1]
+          lat: location.coordinates[0],
+          lng: location.coordinates[1]
         },
         user: user
       }
