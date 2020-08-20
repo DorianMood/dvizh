@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Panel, PanelSpinner, Spinner } from "@vkontakte/vkui";
+import { Panel, Spinner } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
 import "firebase/database";

@@ -8,13 +8,11 @@ import { getDistance } from "geolib";
 import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
 import EventCardList from "../Event/EventCardList";
-import EventCard from "../Event/EventCard";
 import Filter from "../../utils/Filter";
 import InfiniteScroll from "react-infinite-scroller";
-import { useRoute } from "react-router5";
-const LocationEvents = (props) => {
 
-  const router = useRoute();
+
+const LocationEvents = (props) => {
 
   // Fetch data
   const database = firebase.database();
@@ -88,7 +86,7 @@ const LocationEvents = (props) => {
                 return (
                   <Placemark
                     key={id} geometry={geometry} modules={['geoObject.addon.balloon']}
-                properties={{ balloonContent: renderToString(<a href={`#/event/${event.id}`}>{event.name}</a>) }}
+                    properties={{ balloonContent: renderToString(<a href={`#/event/${event.id}`}>{event.name}</a>) }}
                   />)
               })
             }

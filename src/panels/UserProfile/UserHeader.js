@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import Icon24User from "@vkontakte/icons/dist/24/user";
 
-import Rating from "../components/Rating";
 import "./UserProfile.css";
 
 const UserHeader = (props) => {

@@ -4,11 +4,6 @@ import bridge from "@vkontakte/vk-bridge";
 
 export const AuthContext = createContext();
 
-const defaultUser = {
-  id: "dorianmood",
-  
-}
-
 const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState();

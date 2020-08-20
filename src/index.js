@@ -27,7 +27,8 @@ const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   projectId: process.env.REACT_APP_PROJECT_ID,
   databaseURL: process.env.REACT_APP_DATABASE_URL,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET_URL
 };
 firebase.initializeApp(config);
 

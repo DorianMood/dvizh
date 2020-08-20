@@ -16,6 +16,8 @@ import Icon24Camera from "@vkontakte/icons/dist/24/camera";
 import { YMaps, Placemark, Map } from "react-yandex-maps";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
+import "firebase/storage";
+import Jimp from "jimp";
 
 import { initialRating } from "../components/Rating";
 
@@ -30,6 +32,7 @@ const EventCreate = () => {
   });
 
   const database = firebase.database();
+  const storage = firebase.storage();
 
   // form refs to get rid of rerendering
   const eventName = useRef();
@@ -38,8 +41,7 @@ const EventCreate = () => {
   const eventDescription = useRef();
 
   let dateNow = new Date();
-  let defaultDate = dateNow.toISOString().split(".")[0];//`${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}T00:00`;
-  console.log(defaultDate);
+  let defaultDate = dateNow.toISOString().split(".")[0];
   const eventDate = useRef(defaultDate);
 
   const [location, setLocation] = useState({
@@ -71,12 +73,11 @@ const EventCreate = () => {
 
   const submitEvent = async () => {
     // Create event
-    const createdEvent = database.ref(`events`).push(
+    const createdEvent = await database.ref(`events`).push(
       {
         name: eventName.current.value,
         price: eventPrice.current.value,
         date: eventDate.current.valueAsNumber,
-        picture: "",
         description: eventDescription.current.value,
         location: {
           name: location.name,
@@ -86,9 +87,10 @@ const EventCreate = () => {
         user: user
       }
     );
+    storage.ref("events_pictures").child(createdEvent.key).put(eventPicture.current.files[0]);
     // TODO : need fix here. something goes wrong.
     // Subscribe
-    database.ref(`subscriptions/${createdEvent.key}`).set({
+    database.ref(`subscriptions/${createdEvent.key}/${user.vkId}`).set({
       firstName: user.firstName,
       lastName: user.lastName,
       photo: user.photo
@@ -135,7 +137,10 @@ const EventCreate = () => {
         </FormLayoutGroup>
 
         <Input top="Название" getRef={eventName} />
-        <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l">
+        <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
+          // TODO : resize large files here
+          // Jimp.read(eventPicture.current.files[0]);
+        }}>
           Открыть галерею
         </File>
         <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" required />

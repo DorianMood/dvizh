@@ -7,6 +7,7 @@ import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
 import Icon24Recent from '@vkontakte/icons/dist/24/recent';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
+import "firebase/storage";
 import bridge from "@vkontakte/vk-bridge";
 import UserSmallCard from "../components/UserSmallCard";
 import Rating from "../components/Rating";
@@ -18,8 +19,10 @@ const Event = () => {
   const [event, setEvent] = useState(propsEvent);
   const [user, setUser] = useState();
   const [subscriptions, setSubscriptions] = useState({});
+  const [picture, setPicture] = useState("");
 
   const database = firebase.database();
+  const storage = firebase.storage();
 
   useEffect(() => {
     if (!propsEvent) {
@@ -29,6 +32,9 @@ const Event = () => {
     }
     database.ref(`subscriptions/${id}`).on("value", snapshot => {
       setSubscriptions(snapshot.val());
+    });
+    storage.ref(`events_pictures/${id}`).getDownloadURL().then(url => {
+      setPicture(url);
     });
   }, [database, id, propsEvent]);
 
@@ -109,7 +115,8 @@ const Event = () => {
       <Group header={<Header mode="secondary">Информация</Header>}>
         <Div>
           <div style={{
-            backgroundImage: "url(https://api.parkseason.ru/images/styles/1200_500/d2/af/30e62fddc14c05988b44e7c02788e18759dce9c49e9cc281915310.jpg)",
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url(${picture})`,
+            backgroundSize: "cover",
             height: "200px",
             display: "flex",
             alignItems: "flex-end",

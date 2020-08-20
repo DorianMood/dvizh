@@ -25,6 +25,12 @@ const Rating = (props) => {
     const fetchData = async () => {
       database.ref(`rating/${eventId}`).on("value", dataSnapshooot => {
         const fetchedValue = dataSnapshooot.val();
+        if (typeof (fetchedValue) !== typeof ([])) {
+          database.ref(`rating/${eventId}`).set(initialRating.map((element, index) => {
+            return { key: element.key, ids: [] }
+          }));
+          window.location.reload();
+        }
         const ratingData = fetchedValue ? fetchedValue.map(item => {
           return {
             key: item.key,

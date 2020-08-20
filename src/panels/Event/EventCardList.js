@@ -9,8 +9,6 @@ import {
   ModalPage,
   ModalPageHeader,
   Title,
-  Spinner,
-  Button,
 } from "@vkontakte/vkui";
 
 import Icon24Sort from "@vkontakte/icons/dist/24/sort";
