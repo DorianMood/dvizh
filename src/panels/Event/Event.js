@@ -149,7 +149,8 @@ const Event = () => {
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24MoneyCircle style={{ margin: "-2px 10px 0 0" }} fill={"green"} /> {event.price}</Div>
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24Recent style={{ margin: "-2px 10px 0 0" }} />{new Date(event.date).toLocaleString()}</Div>
         </Div>
-
+        
+        <h3 style={{textAlign: "center", margin: "10px 0 0 0"}}>👇🏻 Сканируй событие тут! 👇🏻</h3>
         <Div id="event-qr-code" dangerouslySetInnerHTML={{__html: qrCode}}></Div>
 
         {

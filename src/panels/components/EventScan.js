@@ -11,7 +11,7 @@ const EventScan = () => {
   const onScan = () => {
     bridge.send("VKWebAppOpenCodeReader").then(data => {
       console.log("Scanned", data);
-      router.navigate("event", { id: data });
+      router.navigate("event", { id: data.code_data });
     }).catch(e => {
       console.log(e);
     });
