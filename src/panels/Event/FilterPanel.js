@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Switch,
   Cell,
   Slider,
   FormLayout
@@ -23,8 +22,6 @@ const FilterPanel = (props) => {
         onChange={(value) => onUpdate({ key: 'location', value: value })}
         top={`В радиусе ${filterValues['location']} м`}
       />
-      <Cell asideContent={<Switch defaultChecked={filterValues['date']} onChange={(e) => onUpdate({ key: 'date', value: e.target.checked })} />}>Скоро</Cell>
-      <Cell asideContent={<Switch defaultChecked={filterValues['friends']} onChange={(e) => onUpdate({ key: 'friends', value: e.target.checked })} />}>Друзья</Cell>
       <Cell></Cell><Cell></Cell>
     </FormLayout>
   )
