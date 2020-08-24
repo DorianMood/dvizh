@@ -11,6 +11,7 @@ import "firebase/storage";
 import bridge from "@vkontakte/vk-bridge";
 import UserSmallCard from "../components/UserSmallCard";
 import Rating from "../components/Rating";
+import QRCode from "qrcode";
 
 const Event = () => {
   const { route } = useRouteNode('event');
@@ -20,6 +21,7 @@ const Event = () => {
   const [user, setUser] = useState();
   const [subscriptions, setSubscriptions] = useState({});
   const [picture, setPicture] = useState("");
+  const [qrCode, setQrCode] = useState("");
 
   const database = firebase.database();
   const storage = firebase.storage();
@@ -37,13 +39,19 @@ const Event = () => {
       setPicture(url);
     });
   }, [database, id, propsEvent]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    QRCode.toString(id, (e, data) => {
+      setQrCode(data);
+    });
   }, []);
 
   if (!event) {
@@ -72,6 +80,7 @@ const Event = () => {
   const onUnsubscribeEvent = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
+
 
   console.log("USER is : ", user);
 
@@ -140,6 +149,8 @@ const Event = () => {
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24MoneyCircle style={{ margin: "-2px 10px 0 0" }} fill={"green"} /> {event.price}</Div>
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24Recent style={{ margin: "-2px 10px 0 0" }} />{new Date(event.date).toLocaleString()}</Div>
         </Div>
+
+        <Div id="event-qr-code" dangerouslySetInnerHTML={{__html: qrCode}}></Div>
 
         {
           user && event.user.vkId === user.id ? <></> :

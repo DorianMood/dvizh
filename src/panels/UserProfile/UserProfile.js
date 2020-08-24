@@ -10,6 +10,7 @@ import UserHeader from "./UserHeader";
 import EventAdd from "../components/EventAdd";
 import Filter from "../../utils/Filter";
 import InfiniteScroll from 'react-infinite-scroller';
+import EventScan from "../components/EventScan";
 
 const UserProfile = (props) => {
 
@@ -68,6 +69,7 @@ const UserProfile = (props) => {
         <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
       </InfiniteScroll>
       <EventAdd />
+      <EventScan />
     </Panel>
   );
 };
