@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouteNode } from "react-router5";
-import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Group, Header, UsersStack } from "@vkontakte/vkui";
+import { PanelHeaderButton, Panel, PanelHeader, Spinner, Div, Cell, Button, Group, Header, UsersStack, PanelHeaderContent } from "@vkontakte/vkui";
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24MoneyCircle from "@vkontakte/icons/dist/24/money_circle";
-import Icon28QrCodeOutline from '@vkontakte/icons/dist/28/qr_code_outline';
 import Icon24Recent from '@vkontakte/icons/dist/24/recent';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import firebase from "firebase";
@@ -37,9 +36,11 @@ const Event = () => {
     });
     storage.ref(`events_pictures/${id}`).getDownloadURL().then(url => {
       setPicture(url);
+    }).catch(() =>{
+      // This event has no picture  
     });
   }, [database, id, propsEvent]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
@@ -81,8 +82,6 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
 
-  console.log("USER is : ", user);
-
   return (
     <Panel id={id}>
       <PanelHeader
@@ -91,20 +90,14 @@ const Event = () => {
             <Icon24Back />
           </PanelHeaderButton>
         }
-        right={
-          <PanelHeaderButton onClick={() => { /* TODO : show QR here. */ }}>
-            <Icon28QrCodeOutline />
-          </PanelHeaderButton>
-        }
       >
-        <h5>{event.name}</h5>
+        <PanelHeaderContent>{event.name}</PanelHeaderContent>
       </PanelHeader>
 
       {
-
         new Date(event.date) < new Date() ?
           <Rating eventId={id} userId={user ? user.id : "dorianmood"} /> :
-          <Div>Не забудте поставить рейтинг после окончания события 😊</Div>
+          <Div>Не забудте поставить рейтинг после окончания события <span role="img" aria-label="down">😊</span></Div>
       }
 
       <Div style={{ height: "240px", padding: 0 }}>
@@ -151,9 +144,9 @@ const Event = () => {
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24MoneyCircle style={{ margin: "-2px 10px 0 0" }} fill={"green"} /> {event.price}</Div>
           <Div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}><Icon24Recent style={{ margin: "-2px 10px 0 0" }} />{new Date(event.date).toLocaleString()}</Div>
         </Div>
-        
-        <h3 style={{textAlign: "center", margin: "10px 0 0 0"}}>👇🏻 Сканируй событие тут! 👇🏻</h3>
-        <Div id="event-qr-code" dangerouslySetInnerHTML={{__html: qrCode}}></Div>
+
+        <h3 style={{ textAlign: "center", margin: "10px 0 0 0" }}><span role="img" aria-label="down">👇🏻</span> Сканируй событие тут! <span role="img" aria-label="down">👇🏻</span></h3>
+        <Div id="event-qr-code" dangerouslySetInnerHTML={{ __html: qrCode }}></Div>
 
         {
           user && event.user.vkId === user.id ? <></> :

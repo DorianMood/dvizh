@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-  Div,
-  Title
+  Title,
+  Tabs,
+  TabsItem
 } from "@vkontakte/vkui";
 import firebase from "firebase";
 import "firebase/database";
@@ -34,7 +35,8 @@ const Rating = (props) => {
         const ratingData = fetchedValue ? fetchedValue.map(item => {
           return {
             key: item.key,
-            value: item.ids ? Object.values(item.ids).length : 0
+            value: item.ids ? Object.values(item.ids).length : 0,
+            set: item.ids ? Object.keys(item.ids).indexOf(userId) !== -1 : false
           };
         }) : initialRating;
         setRating(ratingData);
@@ -62,14 +64,14 @@ const Rating = (props) => {
   }
 
   return (
-    <Div style={{ display: "flex" }}>
+    <Tabs>
       {(rating ? rating : initialRating).map((item, key) => (
-        <Div key={key} style={{ display: "flex", flexDirection: "column", flex: 1 }} onClick={() => onRate(item.key)}>
-          <Title level={item.set ? "1" : "2"} style={{ textAlign: "center" }}>{item.key}</Title>
-          <Title level={item.set ? "2" : "3"} style={{ textAlign: "center" }}>{item.value}</Title>
-        </Div>
+        <TabsItem selected={item.set} key={key} onClick={() => { onRate(item.key) }}>
+          <Title>{item.key}</Title>
+          <Title>{item.value}</Title>
+        </TabsItem>
       ))}
-    </Div>
+    </Tabs>
   )
 };
 

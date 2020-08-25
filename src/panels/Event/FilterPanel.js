@@ -8,12 +8,12 @@ import {
 
 const FilterPanel = (props) => {
 
-  const { filterValues, onUpdate } = props;  
+  const { filterValues, onUpdate } = props;
 
   // TODO : check rerendering here
 
   return (
-    <FormLayout>
+    <FormLayout style={{ zIndex: 1000 }}>
       <Slider
         min={500}
         max={50 * 1000}
