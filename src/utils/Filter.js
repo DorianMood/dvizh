@@ -13,7 +13,6 @@ class Filter {
   }
   filter (eventArray, location) {
     // Filter fetched events
-    console.log("FILTERING", eventArray, location);
     const filteredEvents = eventArray.filter(event => {
       if (this.location) {
         const distanceFromMe = getDistance(

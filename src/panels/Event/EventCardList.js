@@ -37,7 +37,6 @@ const ProjectCardList = (props) => {
   }
 
   let filteredEvents = events.filter((element) => {
-    console.log(element);
     return element;
   });
 

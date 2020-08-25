@@ -12,7 +12,7 @@ const ProjectCard = (props) => {
   const { router } = useRoute();
 
   return (
-    <Card size="l" onClick={() => { router.navigate('event', { id: event.id, event }); console.log('card click') }}>
+    <Card size="l" onClick={() => { router.navigate('event', { id: event.id, event }); }}>
       <Cell
         before={
           <Avatar size={32} src={event.user.photo ?? null}>

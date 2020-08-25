@@ -71,8 +71,6 @@ const UserProfile = (props) => {
     nextPage();
   }, [database]);
 
-  console.log(location);
-
   const filteredEvents = filter.filter(fetchedEvents, location);
 
   return (

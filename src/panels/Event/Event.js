@@ -17,7 +17,7 @@ const Event = () => {
 
   const { id, event: propsEvent } = route.params;
   const [event, setEvent] = useState(propsEvent);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({ id: "dorianmood" });
   const [subscriptions, setSubscriptions] = useState({});
   const [picture, setPicture] = useState("");
   const [qrCode, setQrCode] = useState("");
@@ -36,7 +36,7 @@ const Event = () => {
     });
     storage.ref(`events_pictures/${id}`).getDownloadURL().then(url => {
       setPicture(url);
-    }).catch(() =>{
+    }).catch(() => {
       // This event has no picture  
     });
   }, [database, id, propsEvent]);
@@ -82,6 +82,10 @@ const Event = () => {
     database.ref(`subscriptions/${id}/${user.id}`).remove();
   }
 
+  const ratingFragment = new Date(event.date) < new Date() ?
+    <Rating eventId={id} userId={user.id} /> :
+    <Div>Не забудте поставить рейтинг после окончания события <span role="img" aria-label="down">😊</span></Div>;
+
   return (
     <Panel id={id}>
       <PanelHeader
@@ -94,11 +98,7 @@ const Event = () => {
         <PanelHeaderContent>{event.name}</PanelHeaderContent>
       </PanelHeader>
 
-      {
-        new Date(event.date) < new Date() ?
-          <Rating eventId={id} userId={user ? user.id : "dorianmood"} /> :
-          <Div>Не забудте поставить рейтинг после окончания события <span role="img" aria-label="down">😊</span></Div>
-      }
+      { ratingFragment }
 
       <Div style={{ height: "240px", padding: 0 }}>
         <YMaps>

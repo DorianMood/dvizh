@@ -36,14 +36,14 @@ const Rating = (props) => {
           return {
             key: item.key,
             value: item.ids ? Object.values(item.ids).length : 0,
-            set: item.ids ? Object.keys(item.ids).indexOf(userId) !== -1 : false
+            set: item.ids ? Object.keys(item.ids).indexOf(`${userId}`) !== -1 : false
           };
         }) : initialRating;
         setRating(ratingData);
       });
     };
     fetchData();
-  }, [database]);
+  }, [userId]);
 
   const onRate = (key) => {
     rating.forEach((element, index) => {
