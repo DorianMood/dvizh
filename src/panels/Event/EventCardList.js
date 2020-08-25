@@ -31,7 +31,7 @@ const ProjectCardList = (props) => {
   const updateFilter = (data) => {
     const { key, value } = data;
     setInnerFilter({
-      ...filter,
+      ...innerFilter,
       [key]: value
     })
   }
@@ -44,11 +44,8 @@ const ProjectCardList = (props) => {
     <ModalRoot
       activeModal={currentModal}
       onClose={() => {
-        setCurrentModal(null);
         setFilter(innerFilter);
-        filteredEvents = events.filter((element) => {
-          return element;
-        });
+        setCurrentModal(null);
       }}
     >
       <ModalPage

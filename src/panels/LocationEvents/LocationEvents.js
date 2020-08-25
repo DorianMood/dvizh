@@ -69,6 +69,8 @@ const LocationEvents = (props) => {
     return false;
   });
 
+  console.log(filter);
+
   return (
     <Panel>
       <Div style={{ height: "240px", padding: 0 }}>

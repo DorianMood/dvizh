@@ -22,7 +22,8 @@ const UserProfile = (props) => {
 
   const [fetchedUser, setUser] = useState(null);
   const [fetchedEvents, setEvents] = useState([]);
-  const [filter, setFilter] = useState(new Filter(0, null));
+  const [filter, setFilter] = useState(new Filter(3000, null));
+  const [location, setLocation] = useState([56.85, 60.6]);
 
   /*
   Fetch VK user data and save it to state.
@@ -34,6 +35,14 @@ const UserProfile = (props) => {
     }
     fetchData();
   }, [database]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const location = await bridge.send("VKWebAppGetGeodata");
+      setLocation(location);
+    }
+    fetchData();
+  }, [filter]);
 
   /*
   Fetch events from firebase.
@@ -62,11 +71,13 @@ const UserProfile = (props) => {
     nextPage();
   }, [database]);
 
+  const filteredEvents = filter.filter(fetchedEvents, location);
+
   return (
     <Panel>
       <UserHeader user={fetchedUser} />
       <InfiniteScroll threshold={0} loadMore={nextPage} hasMore={loading} loader={<Spinner key={0} />}>
-        <EventCardList events={fetchedEvents} filter={filter} setFilter={setFilter} />
+        <EventCardList events={filteredEvents} filter={filter} setFilter={setFilter} />
       </InfiniteScroll>
       <EventAdd />
       <EventScan />

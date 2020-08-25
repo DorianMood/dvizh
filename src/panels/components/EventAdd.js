@@ -9,7 +9,7 @@ const EventAdd = () => {
 
   return (
     <div
-      style={{ position: "fixed", left: 24, bottom: 64, zIndex: 100 }}
+      style={{ position: "fixed", left: 24, bottom: 64, zIndex: 1 }}
       onClick={() => router.navigate('create') }
     >
       <Avatar style={{ background: "var(--button_primary_background)" , boxShadow: "0px 0px 10px black"}}>
