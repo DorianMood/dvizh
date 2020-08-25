@@ -11,8 +11,6 @@ const UserHeader = (props) => {
   const { user } = props;
   const userName = "Никита Долгошеин";
 
-  console.log("User : ", user);
-
   return (
     <RichCell
       className="user-profile-header"

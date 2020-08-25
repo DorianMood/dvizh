@@ -34,12 +34,12 @@ const UserProfile = (props) => {
       setUser(user);
     }
     fetchData();
-  }, [database]);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
       const location = await bridge.send("VKWebAppGetGeodata");
-      setLocation(location);
+      setLocation([location.lat, location.long]);
     }
     fetchData();
   }, [filter]);
@@ -70,6 +70,8 @@ const UserProfile = (props) => {
   useEffect(() => {
     nextPage();
   }, [database]);
+
+  console.log(location);
 
   const filteredEvents = filter.filter(fetchedEvents, location);
 
