@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dvizh/static/css/main.f3342063.chunk.css",
-    "main.js": "/dvizh/static/js/main.5552cd22.chunk.js",
-    "main.js.map": "/dvizh/static/js/main.5552cd22.chunk.js.map",
+    "main.js": "/dvizh/static/js/main.f1016b32.chunk.js",
+    "main.js.map": "/dvizh/static/js/main.f1016b32.chunk.js.map",
     "runtime-main.js": "/dvizh/static/js/runtime-main.fa0cc135.js",
     "runtime-main.js.map": "/dvizh/static/js/runtime-main.fa0cc135.js.map",
     "static/css/2.47f050ad.chunk.css": "/dvizh/static/css/2.47f050ad.chunk.css",
@@ -13,7 +13,7 @@
     "static/js/4.c8e7a1f0.chunk.js": "/dvizh/static/js/4.c8e7a1f0.chunk.js",
     "static/js/4.c8e7a1f0.chunk.js.map": "/dvizh/static/js/4.c8e7a1f0.chunk.js.map",
     "index.html": "/dvizh/index.html",
-    "precache-manifest.228f2998f20994563c610eeec7d74895.js": "/dvizh/precache-manifest.228f2998f20994563c610eeec7d74895.js",
+    "precache-manifest.fd47e1cbe22ffe77e658e331ceeceb18.js": "/dvizh/precache-manifest.fd47e1cbe22ffe77e658e331ceeceb18.js",
     "service-worker.js": "/dvizh/service-worker.js",
     "static/css/2.47f050ad.chunk.css.map": "/dvizh/static/css/2.47f050ad.chunk.css.map",
     "static/css/main.f3342063.chunk.css.map": "/dvizh/static/css/main.f3342063.chunk.css.map",
@@ -25,6 +25,6 @@
     "static/css/2.47f050ad.chunk.css",
     "static/js/2.1ea9863c.chunk.js",
     "static/css/main.f3342063.chunk.css",
-    "static/js/main.5552cd22.chunk.js"
+    "static/js/main.f1016b32.chunk.js"
   ]
 }
