@@ -52,6 +52,7 @@ const EventCreate = () => {
 
   let dateNow = new Date();
   let defaultDate = dateNow.toISOString().split(".")[0];
+  // TODO : fix date generation. don't need seconds here.
   const eventDate = useRef(defaultDate);
 
   const [location, setLocation] = useState({
@@ -120,7 +121,7 @@ const EventCreate = () => {
       price: eventPrice.current.value !== null || (valid = false),
       description: eventDescription.current.value.length > 0 || (valid = false)
     }
-    console.log()
+    console.log(newValidation);
     setEventValidation(newValidation);
     console.log(valid);
     return false & valid;
