@@ -40,6 +40,16 @@ const EventCreate = () => {
   const eventPicture = useRef();
   const eventDescription = useRef();
 
+  // form validation variables
+  const defaultValidation = {
+    name: false,
+    picture: false,
+    price: false,
+    description: false,
+    location: false
+  };
+  const [eventValidation, setEventValidation] = useState(defaultValidation);
+
   let dateNow = new Date();
   let defaultDate = dateNow.toISOString().split(".")[0];
   const eventDate = useRef(defaultDate);
@@ -101,7 +111,26 @@ const EventCreate = () => {
     ).then(() => console.log("RATING CREATED"));
   }
 
+  const onValidate = () => {
+    let valid = true;
+    const newValidation = {
+      name: eventName.current.value.length > 0 || (valid = false),
+      picture: eventPicture.current.files.length > 0 || (valid = false),
+      date: eventDate.current.value !== null || (valid = false),
+      price: eventPrice.current.value !== null || (valid = false),
+      description: eventDescription.current.value.length > 0 || (valid = false)
+    }
+    console.log()
+    setEventValidation(newValidation);
+    console.log(valid);
+    return false & valid;
+  }
+
   const onSubmit = () => {
+    if (!onValidate()) {
+      eventName.current.status = "error";
+      return false;
+    }
     submitEvent().then(() => {
       window.history.back();
     });
@@ -121,6 +150,7 @@ const EventCreate = () => {
 
 
       <FormLayout>
+        {/** MAP input */}
         <FormLayoutGroup top={location.name}>
           <Div style={{ height: "150px" }}>
             <YMaps>
@@ -136,16 +166,21 @@ const EventCreate = () => {
           </Div>
         </FormLayoutGroup>
 
-        <Input top="Название" getRef={eventName} />
+        {/** NAME input */}
+        <Input top="Название" getRef={eventName} status={eventValidation.name ? "default" : "error"} />
+        {/** PICTURE input */}
         <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
           // TODO : resize large files here
           // Jimp.read(eventPicture.current.files[0]);
-        }}>
+        }} status={eventValidation.picture ? "default" : "error"}>
           Открыть галерею
         </File>
-        <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" required />
-        <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} />
-        <Textarea top="Описание" getRef={eventDescription} defaultValue={0} />
+        {/** DATE input */}
+        <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" status={eventValidation.date ? "default" : "error"} />
+        {/** PRICE input */}
+        <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} status={eventValidation.price ? "default" : "error"} />
+        {/** DESCRIPTION input */}
+        <Textarea top="Описание" getRef={eventDescription} defaultValue={0} status={eventValidation.description ? "default" : "error"} />
 
         <Button type="submit" size="xl" onClick={onSubmit}>Создать</Button>
 
