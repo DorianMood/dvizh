@@ -30,6 +30,7 @@ const EventCreate = () => {
     firstName: "Developer",
     lastName: "Developer"
   });
+  const [preview, setPreview] = useState("");
 
   const database = firebase.database();
   const storage = firebase.storage();
@@ -168,20 +169,33 @@ const EventCreate = () => {
         </FormLayoutGroup>
 
         {/** NAME input */}
-        <Input top="Название" getRef={eventName} status={eventValidation.name ? "default" : "error"} />
+        <Input top="Название" getRef={eventName} status={eventValidation.name ? "default" : "error"} onChange={onValidate} />
         {/** PICTURE input */}
+        {
+          preview !== "" ?
+          <img src={preview} style={{height: "200px", width: "90%", display: "block", margin: "0 auto", objectFit: "cover"}} /> :
+          <></>
+        }
         <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
           // TODO : resize large files here
           // Jimp.read(eventPicture.current.files[0]);
+          const imageFile = eventPicture?.current?.files[0];
+          if (imageFile) {
+            const fileReader = new FileReader();
+            fileReader.onloadend = () => {
+              setPreview(fileReader.result);
+            }
+            fileReader.readAsDataURL(imageFile);
+          }
         }} status={eventValidation.picture ? "default" : "error"}>
           Открыть галерею
         </File>
         {/** DATE input */}
-        <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" status={eventValidation.date ? "default" : "error"} />
+        <Input top="Дата" getRef={eventDate} min={defaultDate} defaultValue={defaultDate} type="datetime-local" status={eventValidation.date ? "default" : "error"} onChange={onValidate} />
         {/** PRICE input */}
-        <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} status={eventValidation.price ? "default" : "error"} />
+        <Input top="Цена" getRef={eventPrice} type="number" defaultValue={0} status={eventValidation.price ? "default" : "error"} onChange={onValidate} />
         {/** DESCRIPTION input */}
-        <Textarea top="Описание" getRef={eventDescription} defaultValue={0} status={eventValidation.description ? "default" : "error"} />
+        <Textarea top="Описание" getRef={eventDescription} defaultValue={0} status={eventValidation.description ? "default" : "error"} onChange={onValidate} />
 
         <Button type="submit" size="xl" onClick={onSubmit}>Создать</Button>
 
