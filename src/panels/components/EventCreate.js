@@ -54,8 +54,6 @@ const EventCreate = () => {
   let dateNow = new Date();
   let defaultDate = dateNow.toISOString().split(".")[0];
   defaultDate = defaultDate.substr(0, defaultDate.length - 3);
-  // TODO : fix date generation. don't need seconds here.
-  console.log(defaultDate);
   const eventDate = useRef(defaultDate);
 
   const [location, setLocation] = useState({
@@ -173,11 +171,13 @@ const EventCreate = () => {
         {/** NAME input */}
         <Input top="Название" getRef={eventName} status={eventValidation.name ? "default" : "error"} onChange={onValidate} />
         {/** PICTURE input */}
-        {
-          preview !== "" ?
-          <img src={preview} style={{height: "200px", width: "90%", display: "block", margin: "0 auto", objectFit: "cover"}} /> :
-          <></>
-        }
+        <Div>
+          {
+            preview !== "" ?
+              <img src={preview} style={{ height: "200px", width: "90%", display: "block", margin: "0 auto", objectFit: "cover" }} /> :
+              <></>
+          }
+        </Div>
         <File accept="image/jpeg,image/x-png" top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
           const imageFile = eventPicture?.current?.files[0];
           if (imageFile) {
