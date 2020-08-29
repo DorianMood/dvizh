@@ -53,7 +53,9 @@ const EventCreate = () => {
 
   let dateNow = new Date();
   let defaultDate = dateNow.toISOString().split(".")[0];
+  defaultDate = defaultDate.substr(0, defaultDate.length - 3);
   // TODO : fix date generation. don't need seconds here.
+  console.log(defaultDate);
   const eventDate = useRef(defaultDate);
 
   const [location, setLocation] = useState({
@@ -122,15 +124,15 @@ const EventCreate = () => {
       price: eventPrice.current.value !== null || (valid = false),
       description: eventDescription.current.value.length > 0 || (valid = false)
     }
-    console.log(newValidation);
     setEventValidation(newValidation);
-    console.log(valid);
-    return false & valid;
+    return valid;
   }
 
   const onSubmit = () => {
     if (!onValidate()) {
-      eventName.current.status = "error";
+      return false;
+    } else {
+      console.log("POSTING");
       return false;
     }
     submitEvent().then(() => {
@@ -176,16 +178,20 @@ const EventCreate = () => {
           <img src={preview} style={{height: "200px", width: "90%", display: "block", margin: "0 auto", objectFit: "cover"}} /> :
           <></>
         }
-        <File top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
-          // TODO : resize large files here
-          // Jimp.read(eventPicture.current.files[0]);
+        <File accept="image/jpeg,image/x-png" top="Загрузите фото" getRef={eventPicture} before={<Icon24Camera />} controlSize="l" onChange={() => {
           const imageFile = eventPicture?.current?.files[0];
           if (imageFile) {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
-              setPreview(fileReader.result);
+              Jimp.read(fileReader.result).then(image => {
+                image.resize(Jimp.AUTO, 1080);
+                image.getBase64Async(Jimp.MIME_PNG).then(base64Link => {
+                  setPreview(base64Link);
+                });
+                // push image to firebase storage here
+              });
             }
-            fileReader.readAsDataURL(imageFile);
+            fileReader.readAsArrayBuffer(imageFile);
           }
         }} status={eventValidation.picture ? "default" : "error"}>
           Открыть галерею
