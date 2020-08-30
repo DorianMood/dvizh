@@ -109,6 +109,7 @@ const EventCreate = () => {
     }).then(() => console.log("SUBSCRIBTION CREATED"));
     // Create rating
     database.ref(`rating/${createdEvent.key}`).set(
+      // TODO : add creator id
       initialRating.map(item => { return { key: item.key } })
     ).then(() => console.log("RATING CREATED"));
   }
