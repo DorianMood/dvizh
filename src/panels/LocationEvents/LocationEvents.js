@@ -39,7 +39,7 @@ const LocationEvents = (props) => {
     if (fetchedEvents.length > 0) {
       query = query.startAt(last.id);
     }
-    query.limitToFirst(3).on("value", dataSnapshot => {
+    query.limitToFirst(10).on("value", dataSnapshot => {
       let events = dataSnapshot.val() ? Object.entries(dataSnapshot.val()).map(e => {
         return { id: e[0], ...e[1] };
       }) : []; if (fetchedEvents.length > 0) events.splice(0, 1);

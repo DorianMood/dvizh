@@ -42,7 +42,8 @@ const Rating = (props) => {
         setRating(ratingData);
       });
     };
-    fetchData();
+    if (eventId)
+      fetchData();
   }, [userId, eventId]);
 
   const onRate = (key) => {
