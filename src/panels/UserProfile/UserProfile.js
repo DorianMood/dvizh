@@ -22,7 +22,7 @@ const UserProfile = (props) => {
 
   const [fetchedUser, setUser] = useState(null);
   const [fetchedEvents, setEvents] = useState([]);
-  const [filter, setFilter] = useState(new Filter(3000, null));
+  const [filter, setFilter] = useState(new Filter(null, null));
   const [location, setLocation] = useState([56.85, 60.6]);
 
   /*
@@ -55,7 +55,7 @@ const UserProfile = (props) => {
     if (fetchedEvents.length > 0) {
       query = query.startAt(last.id);
     }
-    query.limitToFirst(3).on("value", dataSnapshot => {
+    query.limitToFirst(10).on("value", dataSnapshot => {
       let events = dataSnapshot.val() ? Object.entries(dataSnapshot.val()).map(e => {
         return { id: e[0], ...e[1] };
       }) : []; if (fetchedEvents.length > 0) events.splice(0, 1);

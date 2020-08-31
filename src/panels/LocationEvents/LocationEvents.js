@@ -3,7 +3,6 @@ import { renderToString } from "react-dom/server";
 import { Panel, Spinner, Div } from "@vkontakte/vkui";
 import bridge from "@vkontakte/vk-bridge";
 import firebase from "firebase/app";
-import { getDistance } from "geolib";
 
 import { YMaps, Map, Placemark, Circle } from 'react-yandex-maps';
 
@@ -20,7 +19,7 @@ const LocationEvents = (props) => {
 
   const [fetchedEvents, setEvents] = useState([]);
   const [location, setLocation] = useState([56.85, 60.6]);
-  const [filter, setFilter] = useState(new Filter(3000, null));
+  const [filter, setFilter] = useState(new Filter(null, null));
 
   useEffect(() => {
     async function fetchData() {
@@ -57,19 +56,7 @@ const LocationEvents = (props) => {
   }, []);
 
   // Filter fetched events
-  const filteredEvents = fetchedEvents.filter(event => {
-    if (filter['location']) {
-      const distanceFromMe = getDistance(
-        { latitude: event.location.lat, longitude: event.location.lng },
-        { latitude: location[0], longitude: location[1] }
-      );
-      if (distanceFromMe <= filter.location)
-        return true;
-    }
-    return false;
-  });
-
-  console.log(filter);
+  const filteredEvents = filter.filter(fetchedEvents, location);
 
   return (
     <Panel>
@@ -92,7 +79,7 @@ const LocationEvents = (props) => {
                   />)
               })
             }
-            <Circle geometry={[location, filter['location'] /*metrs*/]} />
+            <Circle geometry={[location, filter['location'] | 0]} />
           </Map>
         </YMaps>
       </Div>
