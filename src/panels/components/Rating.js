@@ -24,10 +24,10 @@ const Rating = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      database.ref(`rating/${eventId}`).on("value", dataSnapshooot => {
+      database.ref(`rating/${eventId}/rating`).on("value", dataSnapshooot => {
         const fetchedValue = dataSnapshooot.val();
-        if (typeof (fetchedValue) !== typeof ([])) {
-          database.ref(`rating/${eventId}`).set(initialRating.map((element, index) => {
+        if (fetchedValue === null || typeof (fetchedValue) !== typeof ([])) {
+          database.ref(`rating/${eventId}/rating`).set(initialRating.map((element, index) => {
             return { key: element.key, ids: [] }
           }));
           window.location.reload();
@@ -48,16 +48,16 @@ const Rating = (props) => {
   const onRate = (key) => {
     rating.forEach((element, index) => {
       if (element.key === key) {
-        database.ref(`rating/${eventId}/${index}/ids/${userId}`).set(true);
+        database.ref(`rating/${eventId}/rating/${index}/ids/${userId}`).set(true);
       } else {
-        database.ref(`rating/${eventId}/${index}/ids/${userId}`).remove();
+        database.ref(`rating/${eventId}/rating/${index}/ids/${userId}`).remove();
       }
     });
   }
 
   if (!eventId) {
     // User profile rating
-    database.ref(`events`).orderByChild('user/vkId').equalTo(userId ?? 0).on("value", snapshoot => {
+    database.ref(`rating`).orderByChild('user/vkId').equalTo(userId ?? 0).on("value", snapshoot => {
       console.log(snapshoot.val() ? Object.keys(snapshoot.val()) : `NO EVENTS FOR ${userId}`);
     });
     return <></>;

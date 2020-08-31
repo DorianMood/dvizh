@@ -108,10 +108,10 @@ const EventCreate = () => {
       photo: user.photo
     }).then(() => console.log("SUBSCRIBTION CREATED"));
     // Create rating
-    database.ref(`rating/${createdEvent.key}`).set(
-      // TODO : add creator id
-      initialRating.map(item => { return { key: item.key } })
-    ).then(() => console.log("RATING CREATED"));
+    database.ref(`rating/${createdEvent.key}`).set({
+      rating: initialRating.map(item => { return { key: item.key } }),
+      owner: user.vkId
+    }).then(() => console.log("RATING CREATED"));
   }
 
   const onValidate = () => {
@@ -129,9 +129,6 @@ const EventCreate = () => {
 
   const onSubmit = () => {
     if (!onValidate()) {
-      return false;
-    } else {
-      console.log("POSTING");
       return false;
     }
     submitEvent().then(() => {
