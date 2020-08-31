@@ -43,7 +43,7 @@ const Rating = (props) => {
       });
     };
     fetchData();
-  }, [userId]);
+  }, [userId, eventId]);
 
   const onRate = (key) => {
     rating.forEach((element, index) => {
@@ -57,10 +57,32 @@ const Rating = (props) => {
 
   if (!eventId) {
     // User profile rating
-    database.ref(`rating`).orderByChild('user/vkId').equalTo(userId ?? 0).on("value", snapshoot => {
-      console.log(snapshoot.val() ? Object.keys(snapshoot.val()) : `NO EVENTS FOR ${userId}`);
+    const r = {};
+    database.ref(`rating/`).orderByChild("owner").equalTo(userId).on("value", dataSnapshoot => {
+      const userRating = dataSnapshoot.val();
+      Object.values(userRating).map(item => {
+        item.rating.forEach(item => {
+          const points = Object.keys(item.ids ? item.ids : []).length;
+          r[item.key] = r[item.key] ? r[item.key] + points : points;
+        });
+      });
     });
-    return <></>;
+    const rating = Object.keys(r).map(key => {
+      return {
+        key: key,
+        value: r[key]
+      }
+    });
+    return (
+      <Tabs>
+        {rating.map((item, key) => (
+          <TabsItem key={key}>
+            <Title>{item.key}</Title>
+            <Title>{item.value}</Title>
+          </TabsItem>
+        ))}
+      </Tabs>
+    );
   }
 
   return (

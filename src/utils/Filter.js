@@ -1,4 +1,4 @@
-import { getDistance, earthRadius } from "geolib";
+import { getDistance } from "geolib";
 
 class Filter {
   constructor(location, date, args) {
@@ -12,7 +12,6 @@ class Filter {
     this[element.key] = element.value;
   }
   filter (eventArray, location) {
-    console.log("filtering ", location, this.location);
     // Filter fetched events
     const filteredEvents = eventArray.filter(event => {
       if (this.location && this.location !== null) {

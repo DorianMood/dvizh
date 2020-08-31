@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Icon24User from "@vkontakte/icons/dist/24/user";
 
 import "./UserProfile.css";
+import Rating from "../components/Rating";
 
 const UserHeader = (props) => {
 
@@ -24,7 +25,7 @@ const UserHeader = (props) => {
           {user === null ? <Icon24User /> : null}
         </Avatar>
       }
-      text={ "Rating here soon"
+      text={ <Rating userId={user?.id ? user.id : "dorianmood"} /> 
       }
     >
       <Title level="2" weight="regular">
