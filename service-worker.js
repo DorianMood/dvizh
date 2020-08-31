@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/dvizh/precache-manifest.6c9e1d03b5e4ab0710811533453b947e.js"
+  "/dvizh/precache-manifest.dcc5e5d89972e5f9961988a691c47fde.js"
 );
 
 self.addEventListener('message', (event) => {
