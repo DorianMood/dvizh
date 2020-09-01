@@ -58,11 +58,13 @@ const LocationEvents = (props) => {
   // Filter fetched events
   const filteredEvents = filter.filter(fetchedEvents, location);
 
+  console.log(location);
+
   return (
     <Panel>
-      <Div style={{ height: "240px", padding: 0 }}>
+      <Div style={{ height: "240px", padding: 0}}>
         <YMaps >
-          <Map defaultState={{ center: location, zoom: 10 }} width={'100%'}>
+          <Map state={{ center: location, zoom: 10 }} defaultState={{ center: location, zoom: 10 }} width={'100%'}>
             <Placemark
               geometry={location}
               options={{ preset: "islands#redCircleDotIcon" }}
